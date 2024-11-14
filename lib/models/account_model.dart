@@ -13,6 +13,7 @@ class AccountModel {
   final int nbrereque;
   final int nbrevente;
   final int nbrevisite;
+  final String affiche;
   AccountModel({
     required this.name,
     required this.description,
@@ -25,6 +26,7 @@ class AccountModel {
     required this.accountuid,
     required this.offre,
     required this.nbreproduit,
+    required this.affiche,
     required this.nbrereque,
     required this.nbrevente,
     required this.nbrevisite,
@@ -40,6 +42,7 @@ class AccountModel {
         lienstore: json["lienstore"] ?? "",
         position: json["position"] ?? "",
         accountuid: json["accountuid"] ?? "",
+        affiche: json["affiche"] ?? "",
         nbreproduit: json["nbreproduit"] ?? 0,
         nbrereque: json["nbrereque"] ?? 0,
         nbrevente: json["nbrevente"] ?? 0,
@@ -52,6 +55,7 @@ class AccountModel {
         "nbremployer": nbremployer,
         "number": number,
         "avatar": avatar,
+        "affiche": affiche,
         "localisation": localisation,
         "lienstore": lienstore,
         "position": position,

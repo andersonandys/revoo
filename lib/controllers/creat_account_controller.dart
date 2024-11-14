@@ -53,6 +53,7 @@ class CreatAccountController extends GetxController {
                   offre: 'basic',
                   nbreproduit: 0,
                   nbrereque: 0,
+                  affiche: "",
                   nbrevente: 0,
                   nbrevisite: 0)
               .toJson(),

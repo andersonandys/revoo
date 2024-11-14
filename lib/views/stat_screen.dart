@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:revoo/composant/menu_composant.dart';
+import 'package:revoo/views/chart/chart_requette_screen.dart';
+import 'package:revoo/views/chart/chart_vente_screen.dart';
+import 'package:revoo/views/chart/chart_visit_screen.dart';
 import 'package:revoo/views/chart/global_chart_screen.dart';
 
 class StatScreen extends StatefulWidget {
@@ -30,7 +33,7 @@ class _StatScreenState extends State<StatScreen> {
               ),
               Container(
                 height: 320,
-                child: GlobalChartScreen(),
+                child: ChartRequetteScreen(),
               ),
               const SizedBox(
                 height: 20,
@@ -41,7 +44,7 @@ class _StatScreenState extends State<StatScreen> {
               ),
               Container(
                 height: 320,
-                child: GlobalChartScreen(),
+                child: ChartVenteScreen(),
               ),
               const SizedBox(
                 height: 20,
@@ -52,7 +55,7 @@ class _StatScreenState extends State<StatScreen> {
               ),
               Container(
                 height: 320,
-                child: GlobalChartScreen(),
+                child: ChartVisitScreen(),
               ),
             ],
           ),

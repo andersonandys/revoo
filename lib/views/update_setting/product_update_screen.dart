@@ -638,6 +638,13 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
           ? product.updateproduct.value!.stock
           : int.parse(stock.text),
     });
+    if (nomproduc.text.isEmpty ||
+        description.text.isEmpty ||
+        prix.text.isEmpty ||
+        stock.text.isEmpty) {
+      ShowMessageComposant.messagesucces(
+          context, "Votre modification a ete prise en compte");
+    }
   }
 
 // Fonction pour uploader une image et obtenir le lien de téléchargement

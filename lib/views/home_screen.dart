@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:revoo/composant/menu_composant.dart';
 import 'package:revoo/controllers/accoun_controller.dart';
+import 'package:revoo/models/product_model.dart';
 import 'package:revoo/views/chart/global_chart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -139,6 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: account.products.length,
                     itemBuilder: (BuildContext context, int index) {
+                      ProductModel product = account.products[index];
                       return Container(
                         padding: const EdgeInsets.all(10),
                         height: index.isEven
@@ -162,16 +164,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(
                               height: 10,
                             ),
-                            const Text(
-                              "Nom du produit",
+                            Text(
+                              product.nom,
                               style: TextStyle(fontSize: 17),
                             ),
-                            const Text(
-                              "prix : 2000 FCFA",
+                            Text(
+                              "prix : ${product.prix} FCFA",
                               style: TextStyle(fontSize: 17),
                             ),
-                            const Text(
-                              "Stock : 20",
+                            Text(
+                              "Stock :  ${product.stock}",
                               style: TextStyle(fontSize: 17),
                             ),
                           ],

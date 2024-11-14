@@ -58,9 +58,25 @@ class _AddproductScreenState extends State<AddproductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("Ajout de produit"),
-          centerTitle: true,
-          leading: const MenuWidget()),
+        title: const Text("Ajout de produit"),
+        centerTitle: true,
+        leading: const MenuWidget(),
+        actions: [
+          Obx(
+            () => Padding(
+              padding: const EdgeInsets.all(10),
+              child: GestureDetector(
+                onTap: () => selectaffiche(),
+                child: CircleAvatar(
+                  child: (load.isTrue)
+                      ? const CircularProgressIndicator()
+                      : const Icon(Icons.download_rounded),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: SingleChildScrollView(
@@ -514,7 +530,7 @@ class _AddproductScreenState extends State<AddproductScreen> {
                             borderRadius: BorderRadius.circular(100),
                           ),
                           side: BorderSide.none,
-                          backgroundColor: Color(0xff0D3B66),
+                          backgroundColor: const Color(0xff0D3B66),
                           avatar: const Iconify(
                             Mdi.shoe_print,
                             size: 30,
@@ -522,7 +538,7 @@ class _AddproductScreenState extends State<AddproductScreen> {
                           ),
                           label: Text(
                             pointure,
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           ),
                           deleteIcon: const Icon(
                             Icons.close,
@@ -673,6 +689,48 @@ class _AddproductScreenState extends State<AddproductScreen> {
     setState(() {
       _selectedImages.removeAt(index);
     });
+  }
+
+  //  function pour ajouter l affiche dans le design
+  Future<void> selectaffiche() async {
+    final XFile? images = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (images != null) {
+      load.value = true;
+
+      load.value = true;
+
+      try {
+        // Convertir XFile en File
+        File imageFile = File(images.path);
+
+        String fileName =
+            'products/${DateTime.now().millisecondsSinceEpoch}_${images.path.split('/').last}';
+        UploadTask uploadTask =
+            _storage.ref().child(fileName).putFile(imageFile);
+
+        TaskSnapshot snapshot = await uploadTask;
+        String lien = await snapshot.ref.getDownloadURL();
+
+        // Mise à jour de Firestore avec le lien de l'image
+        DatafirestoreService.data_firestore_account
+            .doc(accountuid)
+            .update({"affiche": lien});
+
+        ShowMessageComposant.messagesucces(
+            context, "Votre affiche a été ajoutée avec succès");
+      } catch (e) {
+        ShowMessageComposant.message(
+            context, "Erreur lors de l'upload de l'image");
+        throw e;
+      } finally {
+        load.value = false;
+      }
+    } else {
+      load.value = false;
+      ShowMessageComposant.message(
+          context, "Vous devez selectionner au moins une image");
+    }
   }
 }
 

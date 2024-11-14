@@ -149,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         nbreproduit: 0,
                         nbrereque: 0,
                         nbrevente: 0,
+                        affiche: "",
                         nbrevisite: 0)
                     .toJson(),
               );

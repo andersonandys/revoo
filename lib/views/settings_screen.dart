@@ -1,10 +1,15 @@
+import 'dart:io';
 import 'dart:ui';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:revoo/composant/menu_composant.dart';
+import 'package:revoo/composant/show_message_composant.dart';
 import 'package:revoo/controllers/accoun_controller.dart';
+import 'package:revoo/service/datafirestore_service.dart';
 import 'package:revoo/views/update_setting/name_update_screen.dart';
 import 'package:revoo/views/update_setting/number_update_screen.dart';
 import 'package:share_plus/share_plus.dart';
@@ -19,6 +24,10 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final account = Get.put(AccounController());
+  var load = false.obs;
+  final _picker = ImagePicker();
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,11 +56,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        CircleAvatar(
-                          radius: 35,
-                          backgroundColor: Colors.white,
-                          backgroundImage:
-                              NetworkImage(account.accountdata.value!.avatar),
+                        Obx(
+                          () => GestureDetector(
+                            onTap: () => selectaffiche(),
+                            child: CircleAvatar(
+                              radius: 35,
+                              backgroundColor: Colors.white,
+                              child: (load.isTrue)
+                                  ? CircularProgressIndicator()
+                                  : null,
+                              backgroundImage: NetworkImage(
+                                  account.accountdata.value!.avatar),
+                            ),
+                          ),
                         ),
                         const SizedBox(
                           width: 10,
@@ -76,7 +93,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               GestureDetector(
@@ -96,7 +113,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Center(
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    color: Color(0xffF5F5F5),
+                    color: const Color(0xffF5F5F5),
                     height: 200,
                     width: 200,
                     child: PrettyQrView.data(
@@ -278,9 +295,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const SizedBox(
-                height: 20,
-              ),
               Container(
                   padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.all(10),
@@ -314,5 +328,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
     );
+  }
+
+  //  function pour ajouter l affiche dans le design
+  Future<void> selectaffiche() async {
+    final XFile? images = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (images != null) {
+      load.value = true;
+
+      load.value = true;
+
+      try {
+        // Convertir XFile en File
+        File imageFile = File(images.path);
+
+        String fileName =
+            'products/${DateTime.now().millisecondsSinceEpoch}_${images.path.split('/').last}';
+        UploadTask uploadTask =
+            _storage.ref().child(fileName).putFile(imageFile);
+
+        TaskSnapshot snapshot = await uploadTask;
+        String lien = await snapshot.ref.getDownloadURL();
+
+        // Mise à jour de Firestore avec le lien de l'image
+        DatafirestoreService.data_firestore_account
+            .doc(account.accountdata.value!.accountuid)
+            .update({"avatar": lien});
+
+        ShowMessageComposant.messagesucces(
+            context, "Votre affiche a été ajoutée avec succès");
+      } catch (e) {
+        ShowMessageComposant.message(
+            context, "Erreur lors de l'upload de l'image");
+        throw e;
+      } finally {
+        load.value = false;
+      }
+    } else {
+      load.value = false;
+      ShowMessageComposant.message(
+          context, "Vous devez selectionner au moins une image");
+    }
   }
 }
