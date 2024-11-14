@@ -146,6 +146,9 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
                                           Icons.image_not_supported,
                                           color: Colors.grey,
                                         ),
+                                        loadingBuilder:
+                                            (context, child, loadingProgress) =>
+                                                CircularProgressIndicator(),
                                       ),
                                     ),
                                   ),
