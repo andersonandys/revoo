@@ -1,0 +1,88 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:revoo/views/loadpage_screen.dart';
+import 'package:revoo/views/login_screen.dart';
+import 'package:revoo/views/product_design/produc_design1_screen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (kIsWeb) {
+    // Configuration pour le Web
+    await Firebase.initializeApp(
+        options: const FirebaseOptions(
+            apiKey: "AIzaSyCXi2rAmxNqtEWLqxv24SEgq-ndBV97R4c",
+            authDomain: "mood-c6bce.firebaseapp.com",
+            projectId: "mood-c6bce",
+            storageBucket: "mood-c6bce.appspot.com",
+            messagingSenderId: "599565454773",
+            appId: "1:599565454773:web:868dfce8495a390c4c1dfc"));
+  } else {
+    // Configuration pour Android/iOS
+    await Firebase.initializeApp();
+  }
+  // configuration apptchek
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: AndroidProvider.playIntegrity,
+  );
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          useMaterial3: true,
+          textTheme: GoogleFonts.poppinsTextTheme(),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          scaffoldBackgroundColor: Colors.white,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  textStyle:
+                      const TextStyle(fontSize: 20, color: Color(0xff0D3B66)),
+                  fixedSize: Size(MediaQuery.of(context).size.width, 60),
+                  backgroundColor: const Color(0xffFFCF0D)))),
+      home: (FirebaseAuth.instance.currentUser != null)
+          ? const LoadpageScreen()
+          : const LoginScreen(),
+    );
+  }
+}
+
+
+  // Map<String, dynamic>? checkIfCodeExists(String code) {
+  //   // Find the room that matches the code
+  //   final room = rooms.firstWhere(
+  //     (room) => room.code == code,
+  //   );
+
+  //   // If the room exists, return its UID and a flag indicating success
+  //   if (room != null) {
+  //     return {
+  //       'exists': true,
+  //       'uid': room.uidroom,
+  //       "nombrep": room.nombrep,
+  //       "players": room.players
+  //       // Assuming room has a 'uid' field
+  //     };
+  //   } else {
+  //     // If no room with the given code is found, return exists as false
+  //     return {
+  //       'exists': false,
+  //       'uid': null,
+  //     };
+  //   }
+  // }
