@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:revoo/composant/menu_composant.dart';
-import 'package:revoo/composant/show_message_composant.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
-import 'package:revoo/models/product_model.dart';
-import 'package:revoo/service/datafirestore_service.dart';
-import 'package:revoo/views/update_setting/product_update_screen.dart';
+import 'package:Expoplace/composant/menu_composant.dart';
+import 'package:Expoplace/composant/show_message_composant.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
+import 'package:Expoplace/models/product_model.dart';
+import 'package:Expoplace/service/datafirestore_service.dart';
+import 'package:Expoplace/views/update_setting/product_update_screen.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({Key? key}) : super(key: key);
@@ -70,7 +70,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                       color: const Color(0xffF5F5F5)),
                                   height: 150,
-                                  width: 150,
+                                  width: 120,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Image.network(

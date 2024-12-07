@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartVenteScreen extends StatelessWidget {

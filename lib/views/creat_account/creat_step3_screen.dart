@@ -11,26 +11,37 @@ class CreatStep3Screen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: Image.asset("assets/succes.png"),
+            child: Image.asset(
+              "assets/succes.png",
+              height: 200,
+              width: 200,
+            ),
           ),
           const SizedBox(
             height: 20,
           ),
           const Center(
-              child: Text(
-            "Lorem Ipsum",
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-          )),
+            child: Text(
+              "Bienvenue chez ExpoPlace 🎉",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff0D3B66),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
           const SizedBox(
             height: 20,
           ),
           const Padding(
-            padding: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(10.0),
             child: Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.justify),
-          )
+              "Votre compte a été créé avec succès ! Nous sommes ravis de vous accueillir dans notre communauté. Explorez les fonctionnalités de ExpoPlace et commencez à transformer votre boutique en ligne dès maintenant.",
+              style: TextStyle(fontSize: 18, color: Colors.black54),
+              textAlign: TextAlign.justify,
+            ),
+          ),
         ],
       ),
     );

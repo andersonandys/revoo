@@ -1,15 +1,24 @@
+import 'package:Expoplace/service/datafirestore_service.dart';
 import 'package:flutter/material.dart';
-import 'package:revoo/controllers/creat_account_controller.dart';
-import 'package:revoo/composant/input_composant.dart';
+import 'package:Expoplace/controllers/creat_account_controller.dart';
+import 'package:Expoplace/composant/input_composant.dart';
+import 'package:get/get.dart';
 
-class CreatStep1Screen extends StatelessWidget {
+class CreatStep1Screen extends StatefulWidget {
   final CreatAccountController controller;
   CreatStep1Screen({super.key, required this.controller});
 
   @override
+  State<CreatStep1Screen> createState() => _CreatStep1ScreenState();
+}
+
+class _CreatStep1ScreenState extends State<CreatStep1Screen> {
+  bool nameIsExist = false;
+
+  @override
   Widget build(BuildContext context) {
     return Form(
-      key: controller.globalkey.value,
+      key: widget.controller.globalkey.value,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -17,9 +26,18 @@ class CreatStep1Screen extends StatelessWidget {
           const SizedBox(height: 20),
           InputComposant(
             hintText: 'Nom de votre boutique',
-            nomText: 'Nom organisation',
+            nomText: 'Nom boutique',
             minLines: 1,
-            controller: controller.nomController,
+            controller: widget.controller.nomController,
+            onFieldSubmitted: (value) =>
+                checkNameExist(value), // Appelé après la soumission
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+                checkNameExist(value); // Vérification en temps réel
+              }
+            },
+            onEditingCompletes: () =>
+                checkNameExist(widget.controller.nomController.text),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Veuillez entrer le nom de votre boutique';
@@ -27,12 +45,20 @@ class CreatStep1Screen extends StatelessWidget {
               return null;
             },
           ),
+          if (nameIsExist)
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                "Ce nom est déjà utilisé",
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
           InputComposant(
-            hintText: 'Nombre employe',
-            nomText: 'Nombre de vos employes',
+            hintText: "Nombre d'employés",
+            nomText: 'Nombre de vos employés',
             minLines: 1,
             istexte: false,
-            controller: controller.employeController,
+            controller: widget.controller.employeController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Veuillez entrer le nombre d\'employés';
@@ -42,9 +68,9 @@ class CreatStep1Screen extends StatelessWidget {
           ),
           InputComposant(
             hintText: 'Description',
-            nomText: 'Description de votre organisation',
+            nomText: 'Description de votre boutique',
             minLines: 3,
-            controller: controller.descriptionController,
+            controller: widget.controller.descriptionController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Veuillez entrer une description';
@@ -55,5 +81,28 @@ class CreatStep1Screen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> checkNameExist(String namedata) async {
+    try {
+      var querySnapshot = await DatafirestoreService.data_firestore_account
+          .where("name", isEqualTo: namedata)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        setState(() {
+          nameIsExist = true;
+        });
+        widget.controller.nomController.clear();
+      } else {
+        setState(() {
+          nameIsExist = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        nameIsExist = false;
+      });
+    }
   }
 }

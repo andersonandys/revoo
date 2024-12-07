@@ -13,20 +13,21 @@ class ProductModel {
   final int caract;
   final int prix;
   final String timestamp;
-  ProductModel({
-    required this.accountuid,
-    required this.nom,
-    required this.description,
-    required this.stock,
-    required this.section,
-    required this.pointure,
-    required this.taille,
-    required this.image,
-    required this.caract,
-    required this.prix,
-    required this.timestamp,
-    required this.idproduit,
-  });
+  final int nbrevisite;
+  ProductModel(
+      {required this.accountuid,
+      required this.nom,
+      required this.description,
+      required this.stock,
+      required this.section,
+      required this.pointure,
+      required this.taille,
+      required this.image,
+      required this.caract,
+      required this.prix,
+      required this.timestamp,
+      required this.idproduit,
+      required this.nbrevisite});
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
         accountuid: json['accountuid'] ?? "",
@@ -40,6 +41,7 @@ class ProductModel {
         prix: json['prix'] ?? 0,
         timestamp: json['timestamp'],
         idproduit: json['idproduit'] ?? "",
+        nbrevisite: json['nbrevisite'] ?? 0,
         image: json['image'] ?? []);
   }
   Map<String, dynamic> toJson() => {
@@ -53,6 +55,7 @@ class ProductModel {
         'pointure': pointure,
         'taille': taille,
         'image': image,
+        'nbrevisite': nbrevisite,
         'caract': caract,
         'timestamp': timestamp,
       };

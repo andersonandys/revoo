@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
-import 'package:revoo/controllers/creat_account_controller.dart';
-import 'package:revoo/service/datafirestore_service.dart';
-import 'package:revoo/views/creat_account/account_informartion_screen.dart';
-import 'package:revoo/views/home_screen.dart';
-import 'package:revoo/views/loadpage_screen.dart';
-import 'package:revoo/views/menu/home_menu.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
+import 'package:Expoplace/controllers/creat_account_controller.dart';
+import 'package:Expoplace/service/datafirestore_service.dart';
+import 'package:Expoplace/views/creat_account/account_informartion_screen.dart';
+import 'package:Expoplace/views/home_screen.dart';
+import 'package:Expoplace/views/loadpage_screen.dart';
+import 'package:Expoplace/views/menu/home_menu.dart';
 
 class OtpVerificationPage extends StatefulWidget {
   final String verificationId;

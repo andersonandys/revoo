@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
-import 'package:revoo/views/menu/home_menu.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
+import 'package:Expoplace/views/login_screen.dart';
+import 'package:Expoplace/views/menu/home_menu.dart';
 
 class MenuScreen extends StatelessWidget {
   late MenuItemlist currentItem;
@@ -48,6 +50,21 @@ class MenuScreen extends StatelessWidget {
                             height: 20,
                           ),
                           ...MenuItems.all.map(buildMenuItem).toList(),
+                          ListTile(
+                            onTap: () {
+                              FirebaseAuth.instance.signOut();
+                              Get.offAll(LoginScreen());
+                            },
+                            leading: const Icon(
+                              Icons.logout_rounded,
+                              color: Colors.redAccent,
+                            ),
+                            title: const Text(
+                              'Déconnexion',
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.redAccent),
+                            ),
+                          ),
                           const Spacer(
                             flex: 1,
                           ),
@@ -55,7 +72,7 @@ class MenuScreen extends StatelessWidget {
                       ),
                     ),
                     const Text(
-                      "Copyrigth REVOO",
+                      "Copyrigth ExpoPlace © 2024",
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

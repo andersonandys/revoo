@@ -1,4 +1,4 @@
-package com.revoo.amj
+package com.expoplace.amj
 
 import io.flutter.embedding.android.FlutterActivity
 

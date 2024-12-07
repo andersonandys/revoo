@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:revoo/composant/menu_composant.dart';
-import 'package:revoo/composant/show_message_composant.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
-import 'package:revoo/models/product_model.dart';
-import 'package:revoo/service/datafirestore_service.dart';
-import 'package:revoo/views/chart/global_chart_screen.dart';
+import 'package:Expoplace/composant/menu_composant.dart';
+import 'package:Expoplace/composant/show_message_composant.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
+import 'package:Expoplace/models/product_model.dart';
+import 'package:Expoplace/service/datafirestore_service.dart';
+import 'package:Expoplace/views/chart/global_chart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: <Widget>[
                     carddata(
                         const Color(0xffFCF7FF),
-                        "Viste",
+                        "Visite",
                         account.accountdata.value!.nbrevisite,
                         const Icon(
                           Iconsax.eye,
@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     account.accountdata.value!.affiche == "") ...[
                   Center(
                     child: Text(
-                      "Bienvue, ${account.accountdata.value!.name}",
+                      "Bienvenue, ${account.accountdata.value!.name}",
                       style: const TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -120,14 +120,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20,
                   ),
                   const Text(
-                    "Pour utiliser votre boutique a son plein  potentiel nous allons vous donner quelque recommentationa suivre",
+                    "Pour utiliser votre boutique à son plein potentiel, nous allons vous donner quelques recommandations suivre.",
                     style: TextStyle(fontSize: 17),
                     textAlign: TextAlign.justify,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text("Tache a effectuer",
+                  const Text("Les tâches à accomplir.",
                       style:
                           TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
                   const SizedBox(
@@ -140,9 +140,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(10),
                         color: const Color(0xffF5F5F5)),
                     child: const ListTile(
-                      title: Text("Publier un produit"),
+                      title: Text("Publier un produit."),
                       subtitle: Text(
-                          "Rendez-vous dans le menu et cliqer sur 'ajouter un article' et remplissez le formulaire pour la soumission"),
+                          "Rendez-vous dans le menu et cliquez sur ajouter un article et remplissez le formulaire pour la soumission."),
                       trailing: CircleAvatar(
                         child: Icon(Icons.clear),
                       ),
@@ -158,9 +158,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(10),
                         color: const Color(0xffF5F5F5)),
                     child: const ListTile(
-                      title: Text("Aoujter une affiche"),
+                      title: Text("Ajouter une affiche"),
                       subtitle: Text(
-                          "Rendez-vous dans le menu et cliqer sur 'ajouter un article', une fois dans la page de publication cliquez sur l icone en haut a gauche"),
+                          "Rendez-vous dans le menu et cliquez sur la section paramètre, une fois dans la page cherchez « Affiche boutique » dans la liste de la section réglage du compte."),
                       trailing: CircleAvatar(
                         child: Icon(Icons.clear),
                       ),
@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: const ListTile(
                       title: Text("Partager votre lien"),
                       subtitle: Text(
-                          "Rendez-vous dans le menu et cliqer sur 'paramettre' dans la section reglage de compte cliquez sur partager ma boutique"),
+                          "Rendez-vous dans le menu et cliquez sur « paramètre » dans la section réglage de compte cliquez sur partager ma boutique."),
                       trailing: CircleAvatar(
                         child: Icon(Icons.clear),
                       ),
@@ -187,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
                 const Text(
-                  "Statistique gbobal",
+                  "Statistique mensuelle.",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -237,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         borderRadius: BorderRadius.circular(10),
                                         color: const Color(0xffF5F5F5)),
                                     height: 150,
-                                    width: 150,
+                                    width: 120,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
@@ -366,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       .doc(idproduct)
                       .delete();
                   ShowMessageComposant.messagesucces(
-                      context, "Le produit a ete supprime avec sucess");
+                      context, "Le produit a été supprimé avec suces.");
                   Navigator.of(context).pop(); // Ferme la boîte de dialogue
                 },
                 child: const Text("Confirmer"),
@@ -417,7 +417,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 10,
           ),
-          const Text("Statistique gbobal"),
+          const Text("Statistique mensuelle."),
           const SizedBox(
             height: 10,
           ),

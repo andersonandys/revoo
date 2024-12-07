@@ -9,12 +9,12 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:revoo/composant/input_composant.dart';
-import 'package:revoo/composant/menu_composant.dart';
-import 'package:revoo/composant/show_message_composant.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
-import 'package:revoo/models/product_model.dart';
-import 'package:revoo/service/datafirestore_service.dart';
+import 'package:Expoplace/composant/input_composant.dart';
+import 'package:Expoplace/composant/menu_composant.dart';
+import 'package:Expoplace/composant/show_message_composant.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
+import 'package:Expoplace/models/product_model.dart';
+import 'package:Expoplace/service/datafirestore_service.dart';
 import 'package:uuid/uuid.dart';
 
 class ProductUpdateScreen extends StatefulWidget {
@@ -148,7 +148,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
                                         ),
                                         loadingBuilder:
                                             (context, child, loadingProgress) =>
-                                                CircularProgressIndicator(),
+                                                child,
                                       ),
                                     ),
                                   ),
@@ -408,7 +408,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
                       onPressed: () => sendPublication(),
                       child: (load.value)
                           ? const CircularProgressIndicator()
-                          : const Text("Publier le produit"))
+                          : const Text("Modifier le produit"))
                 ],
               ),
             ),
@@ -425,7 +425,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
       child: Column(
         children: [
           const Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+              "Veuillez sélectionner les tailles disponibles pour votre vêtement. Cela garantit une meilleure expérience d'achat et une sélection précise lors de la commande."),
           const SizedBox(height: 10),
           SizedBox(
             height: 70,
@@ -503,8 +503,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-            ),
+                "Veuillez ajouter les pointures disponibles pour votre chaussure. Cela garantit une meilleure expérience d'achat et une sélection précise lors de la commande."),
             const SizedBox(height: 10),
             Row(
               children: [
@@ -646,7 +645,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
         prix.text.isEmpty ||
         stock.text.isEmpty) {
       ShowMessageComposant.messagesucces(
-          context, "Votre modification a ete prise en compte");
+          context, "Votre modification a été prise en compte.");
     }
   }
 
@@ -659,7 +658,6 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
       TaskSnapshot snapshot = await uploadTask;
       return await snapshot.ref.getDownloadURL();
     } catch (e) {
-      print("Erreur lors de l'upload de l'image : $e");
       load.value = false;
       throw e;
     }
@@ -679,7 +677,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
     } else {
       load.value = false;
       ShowMessageComposant.message(
-          context, "Vous devez selectionner au moins une image");
+          context, "Vous devez sélectionner au moins, une image.");
     }
   }
 
@@ -707,7 +705,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
       } catch (e) {
         load.value = false;
         ShowMessageComposant.message(
-            context, "Erreur lors de l'upload de l'image");
+            context, "Erreur lors du téléchargement de l'image");
       }
     }
 
@@ -737,7 +735,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
         .update({'image': updatedImages});
 
     ShowMessageComposant.messagesucces(
-        context, "Images mises à jour avec succes!");
+        context, "Images mises à jour avec succès!");
     // Réinitialiser les images sélectionnées pour une future sélection
     _selectedImages.clear();
     _selectedImagesUrls.clear();
@@ -754,10 +752,10 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
           .doc(product.updateproduct.value!.idproduit) // ID du produit
           .update({'image': updatedImages});
       ShowMessageComposant.messagesucces(
-          context, "Image supprimée avec succès!");
+          context, "Image supprimée avec succès !");
     } catch (e) {
       ShowMessageComposant.messagesucces(
-          context, "Erreur lors de la suppression de l'image!");
+          context, "Erreur lors de la suppression de l'image !");
     }
   }
 }
@@ -797,7 +795,7 @@ class _addsectionState extends State<addsection> {
               height: 20,
             ),
             const Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+                "Ajoutez des sections à votre catalogue \n Organisez vos produits en catégories claires, comme Chaussures, Montres ou Vêtements, pour aider vos clients à trouver rapidement ce qu'ils recherchent. Une bonne organisation améliore leur expérience d'achat et augmente vos ventes."),
             const SizedBox(
               height: 10,
             ),
@@ -808,7 +806,7 @@ class _addsectionState extends State<addsection> {
               controller: nomsection,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Veuillez entrer la poiture de la chaussure';
+                  return "Veuillez saisir le nom d'une section.";
                 }
                 return null;
               },
@@ -821,11 +819,11 @@ class _addsectionState extends State<addsection> {
                         .collection("section")
                         .add({"nom": nomsection.text});
                     ShowMessageComposant.messagesucces(
-                        context, "Section ajoute avec succes");
+                        context, "Section ajoutée avec succès.");
                   }
                   Navigator.pop(context);
                 },
-                child: const Text("Publier le produit"))
+                child: const Text("Modifier le produit"))
           ],
         ),
       ),

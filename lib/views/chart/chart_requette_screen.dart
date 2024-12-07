@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartRequetteScreen extends StatelessWidget {
@@ -15,10 +15,8 @@ class ChartRequetteScreen extends StatelessWidget {
         child: Obx(() {
           // Crée une liste de données pour le graphique
           List<_SalesData> data = [
-            _SalesData('Janvier', 0),
-            _SalesData('Fevrier', 10),
-            _SalesData(
-                'Mars', statsController.monthlyStats.value!.visit.toDouble()),
+            _SalesData('requêtes',
+                statsController.monthlyStats.value!.visit.toDouble()),
           ];
 
           // Affiche le graphique avec les données dynamiques

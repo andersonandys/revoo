@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
-import 'package:revoo/composant/show_message_composant.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
-import 'package:revoo/models/account_model.dart';
-import 'package:revoo/service/datafirestore_service.dart';
-import 'package:revoo/views/creat_account/account_informartion_screen.dart';
-import 'package:revoo/views/loadpage_screen.dart';
-import 'package:revoo/views/otp_screen.dart';
+import 'package:Expoplace/composant/show_message_composant.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
+import 'package:Expoplace/models/account_model.dart';
+import 'package:Expoplace/service/datafirestore_service.dart';
+import 'package:Expoplace/views/creat_account/account_informartion_screen.dart';
+import 'package:Expoplace/views/loadpage_screen.dart';
+import 'package:Expoplace/views/otp_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Column(
         children: [
           Expanded(
-            child: Image.asset("assets/login.png"),
+            child: Image.asset("assets/login1.png"),
           ),
           ClipPath(
             clipper: OvalTopBorderClipper(),
@@ -44,43 +44,54 @@ class _LoginScreenState extends State<LoginScreen> {
                   margin: const EdgeInsets.only(top: 50, left: 10, right: 10),
                   child: Column(
                     children: [
-                      Expanded(
+                      const Expanded(
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             "Connectez-vous",
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 10,
                           ),
                           Text(
-                            desc,
-                            style: const TextStyle(
-                                fontSize: 19, color: Colors.white),
+                            "Accédez à votre compte et commencez à profiter des fonctionnalités exclusives de ExpoPlace.",
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            textAlign: TextAlign.justify,
                           ),
                         ],
                       )),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              fixedSize:
-                                  Size(MediaQuery.of(context).size.width, 60),
-                              backgroundColor: Color(0xff0D3B66)),
-                          onPressed: () {
-                            signInWithGoogle();
-                          },
-                          child: const Text(
-                            "Connexion mobile",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          )),
+                      Obx(
+                        () => ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                fixedSize:
+                                    Size(MediaQuery.of(context).size.width, 60),
+                                backgroundColor: const Color(0xff0D3B66)),
+                            onPressed: () {
+                              signInWithGoogle();
+                            },
+                            child: (load.value)
+                                ? const CircularProgressIndicator(
+                                    color: Color(0xffFFCF0D),
+                                  )
+                                : const Text(
+                                    "Connexion avec Google",
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.white),
+                                  )),
+                      ),
                       const SizedBox(
                         height: 10,
                       )
@@ -150,6 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         nbrereque: 0,
                         nbrevente: 0,
                         affiche: "",
+                        expire: "",
                         nbrevisite: 0)
                     .toJson(),
               );
@@ -162,6 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         } else {
           if (account.accountdata.value!.name != "") {
+            load.value = false;
             Navigator.push(
               context,
               MaterialPageRoute<void>(
@@ -169,6 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             );
           } else {
+            load.value = false;
             Navigator.push(
               context,
               MaterialPageRoute<void>(

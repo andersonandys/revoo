@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:revoo/controllers/creat_account_controller.dart';
-import 'package:revoo/views/veri_number_screen.dart';
+import 'package:Expoplace/controllers/creat_account_controller.dart';
+import 'package:Expoplace/views/veri_number_screen.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({Key? key}) : super(key: key);

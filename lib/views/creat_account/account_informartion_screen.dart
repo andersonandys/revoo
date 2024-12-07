@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:revoo/composant/step_account_composant.screen.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
-import 'package:revoo/controllers/creat_account_controller.dart';
-import 'package:revoo/views/creat_account/creat_step1_screen.dart';
-import 'package:revoo/views/creat_account/creat_step2_screen.dart';
-import 'package:revoo/views/creat_account/creat_step3_screen.dart';
+import 'package:Expoplace/composant/step_account_composant.screen.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
+import 'package:Expoplace/controllers/creat_account_controller.dart';
+import 'package:Expoplace/views/creat_account/creat_step1_screen.dart';
+import 'package:Expoplace/views/creat_account/creat_step2_screen.dart';
+import 'package:Expoplace/views/creat_account/creat_step3_screen.dart';
 
 class AccountInformartionScreen extends StatefulWidget {
   const AccountInformartionScreen({Key? key}) : super(key: key);

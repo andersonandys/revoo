@@ -1,4 +1,4 @@
-name: revoo
+name: Expoplace
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.0+0.0.1
 
 environment:
   sdk: ^3.5.4
@@ -54,10 +54,12 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.2
-  change_app_package_name: ^1.4.0
   share_plus: ^10.1.2
   cached_network_image: ^3.4.1
   pretty_qr_code: ^3.3.0
+  carousel_slider: ^5.0.0
+  cinetpay: ^1.0.8
+  flutter_advanced_segment: ^3.0.2
 
 dev_dependencies:
   flutter_test:
@@ -69,7 +71,27 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
-
+  flutter_launcher_icons: ^0.14.2
+  icons_launcher: ^3.0.0
+  change_app_package_name: ^1.4.0
+  flutter_native_splash: ^2.4.3
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/logo.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/logo.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/logo.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

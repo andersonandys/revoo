@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:revoo/models/account_model.dart';
-import 'package:revoo/models/accountstat_model.dart';
-import 'package:revoo/models/product_model.dart';
-import 'package:revoo/service/datafirestore_service.dart';
-import 'package:revoo/views/update_setting/product_update_screen.dart';
+import 'package:Expoplace/models/account_model.dart';
+import 'package:Expoplace/models/accountstat_model.dart';
+import 'package:Expoplace/models/product_model.dart';
+import 'package:Expoplace/service/datafirestore_service.dart';
+import 'package:Expoplace/views/update_setting/product_update_screen.dart';
 
 class AccounController extends GetxController {
   var accountuid = "".obs;
@@ -34,10 +34,7 @@ class AccounController extends GetxController {
       if (event.data() != null) {
         accountdata.value =
             AccountModel.fromJson(event.data() as Map<String, dynamic>);
-        print("initialise");
-      } else {
-        print("null pas initilise");
-      }
+      } else {}
     });
   }
 
@@ -68,13 +65,11 @@ class AccounController extends GetxController {
           .snapshots()
           .listen((event) {
         if (event.data() != null) {
-          print("tout est ok");
           monthlyStats.value =
               AccountstatModel.fromJson(event.data() as Map<String, dynamic>);
         } else {}
       });
     } catch (e) {
-      print("Erreur lors de la récupération des statistiques : $e");
       monthlyStats.value = null;
     }
   }

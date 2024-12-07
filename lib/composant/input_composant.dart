@@ -8,6 +8,9 @@ class InputComposant extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool? enable;
   final bool? istexte;
+  final Function()? onEditingCompletes;
+  final Function(String)? onFieldSubmitted;
+  final Function(String)? onChanged;
   InputComposant(
       {Key? key,
       required this.hintText,
@@ -16,7 +19,10 @@ class InputComposant extends StatelessWidget {
       required this.controller,
       this.validator,
       this.enable,
-      this.istexte})
+      this.istexte,
+      this.onEditingCompletes,
+      this.onFieldSubmitted,
+      this.onChanged})
       : super(key: key);
 
   @override
@@ -49,6 +55,9 @@ class InputComposant extends StatelessWidget {
               minLines: minLines,
               maxLines: minLines,
               validator: validator,
+              onEditingComplete: onEditingCompletes,
+              onFieldSubmitted: onFieldSubmitted,
+              onChanged: onChanged,
               decoration: InputDecoration(
                 border: UnderlineInputBorder(
                   borderSide: BorderSide.none,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:revoo/views/product_design/detail_product_design.dart';
+import 'package:Expoplace/views/product_design/detail_product_design.dart';
 
 class ProducDesign1Screen extends StatefulWidget {
   const ProducDesign1Screen({Key? key}) : super(key: key);

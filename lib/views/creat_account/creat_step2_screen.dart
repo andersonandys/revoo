@@ -1,15 +1,26 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:revoo/composant/input_composant.dart';
-import 'package:revoo/controllers/creat_account_controller.dart';
-import 'package:revoo/service/localisation_service.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:Expoplace/composant/input_composant.dart';
+import 'package:Expoplace/composant/show_message_composant.dart';
+import 'package:Expoplace/composant/step_account_composant.screen.dart';
+import 'package:Expoplace/controllers/creat_account_controller.dart';
+import 'package:Expoplace/service/datafirestore_service.dart';
+import 'package:Expoplace/service/localisation_service.dart';
 
 class CreatStep2Screen extends StatelessWidget {
   final CreatAccountController controller;
   CreatStep2Screen({Key? key, required this.controller}) : super(key: key);
   final LocationService _locationService = LocationService();
   Position? _currentPosition;
+  var load = false.obs;
+  final _picker = ImagePicker();
+  final creatController = Get.put(CreatAccountController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,86 +35,77 @@ class CreatStep2Screen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Center(
-              child: Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundColor: Colors.black,
-                  ),
-                  Positioned(
-                    bottom: 1,
-                    right: 1,
-                    child: CircleAvatar(
-                      backgroundColor: Color(0xffF5F5F5),
-                      child: Icon(Iconsax.camera, color: Colors.black),
+            Obx(
+              () => Center(
+                child: Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.black,
+                      backgroundImage: (creatController.avatar.isNotEmpty)
+                          ? NetworkImage(creatController.avatar.value)
+                          : null,
                     ),
-                  )
-                ],
+                    Positioned(
+                      bottom: 1,
+                      right: 1,
+                      child: (load.isTrue)
+                          ? const CircularProgressIndicator(
+                              color: Color(0xff0D3B66),
+                            )
+                          : GestureDetector(
+                              onTap: () => selectlogo(context),
+                              child: const CircleAvatar(
+                                backgroundColor: Color(0xffF5F5F5),
+                                child:
+                                    Icon(Iconsax.camera, color: Colors.black),
+                              ),
+                            ),
+                    )
+                  ],
+                ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
+            const Text(
+              "Numéro WhatsApp",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              "Enregistrez le numéro WhatsApp que vous utilisez pour votre boutique.",
+            ),
             InputComposant(
               hintText: 'Votre numéro whatsapp',
-              nomText: 'Numero whatsapp',
+              nomText: '',
               minLines: 1,
               istexte: false,
               controller: controller.numero_controller,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Veuillez entrer votre numero whatsapp';
+                  return 'Veuillez entrer votre numéro whatsapp';
                 }
                 return null;
               },
             ),
-            const Text(
-              "Localisation",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const Text(
-              "Cliquer sur l’icone pour octroyer votre localisation",
-            ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: InputComposant(
-                      hintText: 'Cocody',
-                      nomText: "",
-                      minLines: 1,
-                      enable: false,
-                      controller: controller.localisation_controller,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Veuillez selectionner votre localisation';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: _getLocationAndAddress,
-                    child: const CircleAvatar(
-                      backgroundColor: Color(0xffF5F5F5),
-                      radius: 25,
-                      child: Icon(
-                        Icons.location_on,
-                        size: 40,
-                        color: Colors.black,
-                      ),
-                    ),
-                  )
-                ],
-              ),
+            InputComposant(
+              hintText: 'Exemple : Cocody',
+              nomText: "Localisation",
+              minLines: 1,
+              istexte: true,
+              controller: controller.localisation_controller,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Veuillez selectionner votre localisation';
+                }
+                return null;
+              },
             ),
             InputComposant(
               hintText:
-                  "https://www.google.com/${controller.nomController.text}",
-              nomText: "Lien store",
+                  "https://exploplace.shop/${controller.nomController.text.toLowerCase().replaceAll(" ", "_")}",
+              nomText: "Lien de votre boutique",
               minLines: 1,
               controller: controller.lienstotre_controller,
               enable: false,
@@ -121,6 +123,38 @@ class CreatStep2Screen extends StatelessWidget {
           await _locationService.getAddressFromCoordinates(position);
       controller.position_localisation.value = position.toString();
       controller.localisation_controller.text = address!;
+    }
+  }
+
+  selectlogo(context) async {
+    final XFile? images = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (images != null) {
+      load.value = true;
+      try {
+        // Convertir XFile en File
+        File imageFile = File(images.path);
+
+        String fileName =
+            'products/${DateTime.now().millisecondsSinceEpoch}_${images.path.split('/').last}';
+        UploadTask uploadTask =
+            FirebaseStorage.instance.ref().child(fileName).putFile(imageFile);
+
+        TaskSnapshot snapshot = await uploadTask;
+        String lien = await snapshot.ref.getDownloadURL();
+
+        // Mise à jour de Firestore avec le lien de l'image
+        creatController.avatar.value = lien;
+        load.value = false;
+      } catch (e) {
+        ShowMessageComposant.message(
+            context, "Erreur lors du téléchargement de l'image");
+        throw e;
+      }
+    } else {
+      load.value = false;
+      ShowMessageComposant.message(
+          context, "Vous devez sélectionner au moins, une image.");
     }
   }
 }

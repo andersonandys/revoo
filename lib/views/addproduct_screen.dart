@@ -9,11 +9,12 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:revoo/composant/input_composant.dart';
-import 'package:revoo/composant/menu_composant.dart';
-import 'package:revoo/composant/show_message_composant.dart';
-import 'package:revoo/models/product_model.dart';
-import 'package:revoo/service/datafirestore_service.dart';
+import 'package:Expoplace/composant/input_composant.dart';
+import 'package:Expoplace/composant/menu_composant.dart';
+import 'package:Expoplace/composant/show_message_composant.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
+import 'package:Expoplace/models/product_model.dart';
+import 'package:Expoplace/service/datafirestore_service.dart';
 import 'package:uuid/uuid.dart';
 
 class AddproductScreen extends StatefulWidget {
@@ -54,6 +55,20 @@ class _AddproductScreenState extends State<AddproductScreen> {
   RxInt totalImages = 0.obs;
   var load = false.obs;
   final accountuid = FirebaseAuth.instance.currentUser!.uid;
+  final accountdata = Get.put(AccounController());
+  String expireDate = "";
+  @override
+  void initState() {
+    super.initState();
+
+    DateTime now = DateTime.now();
+    DateTime nextMonth = DateTime(now.year, now.month, now.day);
+
+    setState(() {
+      expireDate = "${nextMonth.day}-${nextMonth.month}-${nextMonth.year}";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,21 +76,6 @@ class _AddproductScreenState extends State<AddproductScreen> {
         title: const Text("Ajout de produit"),
         centerTitle: true,
         leading: const MenuWidget(),
-        actions: [
-          Obx(
-            () => Padding(
-              padding: const EdgeInsets.all(10),
-              child: GestureDetector(
-                onTap: () => selectaffiche(),
-                child: CircleAvatar(
-                  child: (load.isTrue)
-                      ? const CircularProgressIndicator()
-                      : const Icon(Icons.download_rounded),
-                ),
-              ),
-            ),
-          )
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -314,7 +314,7 @@ class _AddproductScreenState extends State<AddproductScreen> {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    "Caracteristique",
+                    "Caractéristique",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 5),
@@ -381,11 +381,44 @@ class _AddproductScreenState extends State<AddproductScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  ElevatedButton(
-                      onPressed: () => sendPublication(),
-                      child: (load.value)
-                          ? const CircularProgressIndicator()
-                          : const Text("Publier le produit"))
+                  if (accountdata.accountdata.value!.expire.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "Effectuer votre premier abonnement pour avoir accès à cette fonction ",
+                        style: TextStyle(fontSize: 16),
+                        textAlign: TextAlign.justify,
+                      ),
+                    )
+                  else ...[
+                    if (accountdata.accountdata.value!.expire == expireDate)
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Votre abonnement a expiré, vous devez vous réabonner pour avoir accès à cette fonction.",
+                          style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.justify,
+                        ),
+                      )
+                    else ...[
+                      if (accountdata.accountdata.value!.offre == 'basic' &&
+                          accountdata.accountdata.value!.nbreproduit == 10)
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Vous avez atteint le nombre de produits autorisé. ",
+                            style: TextStyle(fontSize: 16),
+                            textAlign: TextAlign.justify,
+                          ),
+                        )
+                      else
+                        ElevatedButton(
+                            onPressed: () => sendPublication(),
+                            child: (load.value)
+                                ? const CircularProgressIndicator()
+                                : const Text("Publier le produit"))
+                    ]
+                  ],
                 ],
               ),
             ),
@@ -402,7 +435,7 @@ class _AddproductScreenState extends State<AddproductScreen> {
       child: Column(
         children: [
           const Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+              "Veuillez sélectionner les tailles disponibles pour votre vêtement. Cela garantit une meilleure expérience d'achat et une sélection précise lors de la commande."),
           const SizedBox(height: 10),
           SizedBox(
             height: 70,
@@ -461,8 +494,7 @@ class _AddproductScreenState extends State<AddproductScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-            ),
+                "Veuillez ajouter les pointures disponibles pour votre chaussure. Cela garantit une meilleure expérience d'achat et une sélection précise lors de la commande."),
             const SizedBox(height: 10),
             Row(
               children: [
@@ -561,11 +593,11 @@ class _AddproductScreenState extends State<AddproductScreen> {
   sendPublication() {
     if (_selectedImages.isEmpty) {
       ShowMessageComposant.message(
-          context, "Vous devez selectionner au moins une image");
+          context, "Vous devez sélectionner au moins, une image.");
     } else if (_key.currentState!.validate()) {
       if (selectsection.value.isEmpty) {
         ShowMessageComposant.message(
-            context, "Vous devez selectionner une section");
+            context, "Vous devez sélectionner une section.");
       } else {
         switch (selectedIndex.value) {
           case 0:
@@ -574,7 +606,7 @@ class _AddproductScreenState extends State<AddproductScreen> {
           case 1:
             if (selecttaille.isEmpty) {
               ShowMessageComposant.message(
-                  context, "Vous devez selectionner au moins une taille");
+                  context, "Vous devez sélectionner au moins, une taille.");
             } else {
               sendData();
             }
@@ -582,14 +614,14 @@ class _AddproductScreenState extends State<AddproductScreen> {
           case 2:
             if (pointures.isEmpty) {
               ShowMessageComposant.message(
-                  context, "Vous devez ajouter au moins une pointure");
+                  context, "Vous devez ajouter au moins une pointure.");
             } else {
               sendData();
             }
             break;
           default:
             ShowMessageComposant.message(
-                context, "Vous devez choisir une caractéristique");
+                context, "Vous devez choisir une caractéristique.");
             break;
         }
       }
@@ -600,6 +632,9 @@ class _AddproductScreenState extends State<AddproductScreen> {
 // Fonction pour uploader une image et obtenir le lien de téléchargement
 // Fonction pour envoyer les données dans Firestore avec les liens d’images
   Future<void> sendData() async {
+    final DateTime now = DateTime.now();
+    final String month =
+        now.month.toString().padLeft(2, '0'); // Format '01', '02', etc.
     var uuid = const Uuid();
     load.value = true;
     List<String> imageUrls = [];
@@ -615,7 +650,7 @@ class _AddproductScreenState extends State<AddproductScreen> {
         uploadProgress.value += 1; // Mise à jour de la progression
       } catch (e) {
         ShowMessageComposant.message(
-            context, "Erreur pendant l'upload de l'image ");
+            context, "Erreur pendant le téléchargement de l'image ");
       }
     }
     // Vérifier si tous les téléchargements d’images sont terminés
@@ -633,14 +668,22 @@ class _AddproductScreenState extends State<AddproductScreen> {
               prix: int.parse(prix.text),
               caract: selectedIndex.value,
               idproduit: idproduit,
+              nbrevisite: 0,
               timestamp: DateTime.now().toString(),
             ).toJson(),
           );
       DatafirestoreService.data_firestore_account
           .doc(accountuid)
           .update({"nbreproduit": FieldValue.increment(1)});
+      DatafirestoreService.data_firestore_account
+          .doc(FirebaseAuth.instance.currentUser!
+              .uid) // Remplace 'userId' par l'ID de l'utilisateur connecté si nécessaire
+          .collection('stats')
+          .doc(month)
+          .update({"produit": FieldValue.increment(1)});
+
       ShowMessageComposant.messagesucces(
-          context, "Votre produit a été ajouté avec succès");
+          context, "Votre produit a été publié avec succès.");
       load.value = false;
       uploadProgress.value = 0;
       totalImages.value = 0;
@@ -665,7 +708,6 @@ class _AddproductScreenState extends State<AddproductScreen> {
       TaskSnapshot snapshot = await uploadTask;
       return await snapshot.ref.getDownloadURL();
     } catch (e) {
-      print("Erreur lors de l'upload de l'image : $e");
       load.value = false;
       throw e;
     }
@@ -689,48 +731,6 @@ class _AddproductScreenState extends State<AddproductScreen> {
     setState(() {
       _selectedImages.removeAt(index);
     });
-  }
-
-  //  function pour ajouter l affiche dans le design
-  Future<void> selectaffiche() async {
-    final XFile? images = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (images != null) {
-      load.value = true;
-
-      load.value = true;
-
-      try {
-        // Convertir XFile en File
-        File imageFile = File(images.path);
-
-        String fileName =
-            'products/${DateTime.now().millisecondsSinceEpoch}_${images.path.split('/').last}';
-        UploadTask uploadTask =
-            _storage.ref().child(fileName).putFile(imageFile);
-
-        TaskSnapshot snapshot = await uploadTask;
-        String lien = await snapshot.ref.getDownloadURL();
-
-        // Mise à jour de Firestore avec le lien de l'image
-        DatafirestoreService.data_firestore_account
-            .doc(accountuid)
-            .update({"affiche": lien});
-
-        ShowMessageComposant.messagesucces(
-            context, "Votre affiche a été ajoutée avec succès");
-      } catch (e) {
-        ShowMessageComposant.message(
-            context, "Erreur lors de l'upload de l'image");
-        throw e;
-      } finally {
-        load.value = false;
-      }
-    } else {
-      load.value = false;
-      ShowMessageComposant.message(
-          context, "Vous devez selectionner au moins une image");
-    }
   }
 }
 
@@ -769,7 +769,7 @@ class _addsectionState extends State<addsection> {
               height: 20,
             ),
             const Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+                "Ajoutez des sections à votre catalogue \n Organisez vos produits en catégories claires, comme Chaussures, Montres ou Vêtements, pour aider vos clients à trouver rapidement ce qu'ils recherchent. Une bonne organisation améliore leur expérience d'achat et augmente vos ventes."),
             const SizedBox(
               height: 10,
             ),
@@ -780,10 +780,13 @@ class _addsectionState extends State<addsection> {
               controller: nomsection,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Veuillez entrer la poiture de la chaussure';
+                  return "Veuillez saisir le nom d'une section.";
                 }
                 return null;
               },
+            ),
+            const SizedBox(
+              height: 20,
             ),
             ElevatedButton(
                 onPressed: () {
@@ -797,7 +800,7 @@ class _addsectionState extends State<addsection> {
                   }
                   Navigator.pop(context);
                 },
-                child: const Text("Publier le produit"))
+                child: const Text("Ajouter la section"))
           ],
         ),
       ),

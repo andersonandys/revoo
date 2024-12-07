@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:revoo/views/addproduct_screen.dart';
-import 'package:revoo/views/campagne/CampagneScreen.dart';
-import 'package:revoo/views/home_screen.dart';
-import 'package:revoo/views/menu/menu_screen.dart';
-import 'package:revoo/views/product_screen.dart';
-import 'package:revoo/views/settings_screen.dart';
-import 'package:revoo/views/stat_screen.dart';
+import 'package:Expoplace/views/addproduct_screen.dart';
+import 'package:Expoplace/views/campagne/CampagneScreen.dart';
+import 'package:Expoplace/views/home_screen.dart';
+import 'package:Expoplace/views/menu/menu_screen.dart';
+import 'package:Expoplace/views/product_screen.dart';
+import 'package:Expoplace/views/settings_screen.dart';
+import 'package:Expoplace/views/stat_screen.dart';
 
 class HomeMenu extends StatefulWidget {
   const HomeMenu({Key? key}) : super(key: key);
@@ -48,14 +48,11 @@ class _HomeMenuState extends State<HomeMenu> {
         return AddproductScreen();
       case MenuItems.article:
         return ProductScreen();
-      case MenuItems.campagne:
-        return CampagneScreen();
+
       case MenuItems.stat:
         return StatScreen();
       case MenuItems.settings:
         return SettingsScreen();
-      case MenuItems.deconnexion:
-        return Container();
       default:
         return HomeScreen();
     }
@@ -66,18 +63,15 @@ class MenuItems {
   static const home = MenuItemlist('Dashboard', Icons.payment);
   static const addproduit = MenuItemlist('Ajouter un article', Iconsax.box_add);
   static const article = MenuItemlist('Mes articles', Iconsax.box);
-  static const settings = MenuItemlist('Paramettre', Icons.settings);
-  static const campagne = MenuItemlist('Campagne', Icons.ads_click);
+  static const settings = MenuItemlist('Paramètre', Icons.settings);
   static const stat = MenuItemlist('Mes statistiques', Iconsax.activity);
-  static const deconnexion = MenuItemlist('Deconnexion', Icons.logout_rounded);
+
   static const all = <MenuItemlist>[
     home,
     addproduit,
     article,
-    campagne,
     stat,
     settings,
-    deconnexion
   ];
 }
 

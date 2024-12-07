@@ -7,12 +7,56 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:599565454773:android:5d5d326b00bb5cae4c1dfc",
+        "android_client_info": {
+          "package_name": "com.expoplace.amj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599565454773-ve0i2n3i3htf4455vnmmmt4t8gnni3k0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFVuMR_4WwAwCHYKqRtM9XzZwZvGa0waQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599565454773-051ofpobnip8r7npukogqt48ifg5ks2t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "599565454773-9bu1c3b83v3tna4sc6b4nhhjcg0cjlji.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.paiya"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:599565454773:android:dcd9e0791cc85e3a4c1dfc",
         "android_client_info": {
           "package_name": "com.revoo.amj"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "599565454773-75ocvkgu4g5qh7q5ibeate2t0ostilm4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.revoo.amj",
+            "certificate_hash": "15b5baf0526070ace7bb8255f6f6ba28ec4a94aa"
+          }
+        },
         {
           "client_id": "599565454773-ve0i2n3i3htf4455vnmmmt4t8gnni3k0.apps.googleusercontent.com",
           "client_type": 3

@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
-import 'package:revoo/service/datafirestore_service.dart';
-import 'package:revoo/views/creat_account/account_informartion_screen.dart';
-import 'package:revoo/views/menu/home_menu.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
+import 'package:Expoplace/service/datafirestore_service.dart';
+import 'package:Expoplace/views/creat_account/account_informartion_screen.dart';
+import 'package:Expoplace/views/menu/home_menu.dart';
 
 class LoadpageScreen extends StatefulWidget {
   const LoadpageScreen({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _LoadpageScreenState extends State<LoadpageScreen> {
     account.getdataAccount();
     account.getproduct();
     account.fetchCurrentMonthStats();
-    Timer(const Duration(seconds: 5), () {
+    Timer(const Duration(seconds: 3), () {
       gomenu();
     });
   }

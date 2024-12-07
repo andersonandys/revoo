@@ -5,27 +5,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revoo/views/loadpage_screen.dart';
-import 'package:revoo/views/login_screen.dart';
-import 'package:revoo/views/product_design/produc_design1_screen.dart';
+import 'package:Expoplace/views/loadpage_screen.dart';
+import 'package:Expoplace/views/login_screen.dart';
+import 'package:Expoplace/views/product_design/produc_design1_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (kIsWeb) {
-    // Configuration pour le Web
-    await Firebase.initializeApp(
-        options: const FirebaseOptions(
-            apiKey: "AIzaSyCXi2rAmxNqtEWLqxv24SEgq-ndBV97R4c",
-            authDomain: "mood-c6bce.firebaseapp.com",
-            projectId: "mood-c6bce",
-            storageBucket: "mood-c6bce.appspot.com",
-            messagingSenderId: "599565454773",
-            appId: "1:599565454773:web:868dfce8495a390c4c1dfc"));
-  } else {
-    // Configuration pour Android/iOS
-    await Firebase.initializeApp();
-  }
+  await Firebase.initializeApp();
+
   // configuration apptchek
   await FirebaseAppCheck.instance.activate(
     androidProvider: AndroidProvider.playIntegrity,

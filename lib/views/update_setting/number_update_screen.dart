@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:revoo/composant/input_composant.dart';
-import 'package:revoo/composant/show_message_composant.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
-import 'package:revoo/service/datafirestore_service.dart';
+import 'package:Expoplace/composant/input_composant.dart';
+import 'package:Expoplace/composant/show_message_composant.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
+import 'package:Expoplace/service/datafirestore_service.dart';
 
 class NumberUpdateScreen extends StatefulWidget {
   NumberUpdateScreen({Key? key}) : super(key: key);
@@ -40,13 +40,13 @@ class _NumberUpdateScreenState extends State<NumberUpdateScreen> {
               height: 20,
             ),
             const Text(
-                "En Modifiant le numero de votre boutique cela va empacter les commandes sur votre boutique ainsi que les discussion effectue avec les autres clients"),
+                "En modifiant le numéro de votre boutique cela va impacter les commandes sur votre boutique ainsi que les discussions effectuées avec les autres clients"),
             const SizedBox(
               height: 10,
             ),
             InputComposant(
               hintText: account.accountdata.value!.number,
-              nomText: 'Nume whatsapp',
+              nomText: 'Numéro Whatsapp',
               minLines: 1,
               controller: number,
               istexte: false,
@@ -58,7 +58,7 @@ class _NumberUpdateScreenState extends State<NumberUpdateScreen> {
                         .doc(account.accountdata.value!.accountuid)
                         .update({"number": number.text});
                     ShowMessageComposant.messagesucces(
-                        context, "Numero modifie avec succes");
+                        context, " Numéro modifie avec succès.");
                     Navigator.pop(context);
                   }
                 },

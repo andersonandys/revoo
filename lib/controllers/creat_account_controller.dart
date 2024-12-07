@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:revoo/controllers/accoun_controller.dart';
-import 'package:revoo/models/account_model.dart';
-import 'package:revoo/service/datafirestore_service.dart';
-import 'package:revoo/views/loadpage_screen.dart';
-import 'package:revoo/views/menu/home_menu.dart';
+import 'package:Expoplace/controllers/accoun_controller.dart';
+import 'package:Expoplace/models/account_model.dart';
+import 'package:Expoplace/service/datafirestore_service.dart';
+import 'package:Expoplace/views/loadpage_screen.dart';
+import 'package:Expoplace/views/menu/home_menu.dart';
 
 class CreatAccountController extends GetxController {
   var step_account = 0.obs;
@@ -45,15 +45,17 @@ class CreatAccountController extends GetxController {
                   description: descriptionController.text,
                   avatar: avatar.value,
                   localisation: localisation_controller.text,
-                  lienstore: "https://www.google.com/${nomController.text}",
+                  lienstore:
+                      nomController.text.replaceAll(" ", "_").toLowerCase(),
                   position: position_localisation.value,
                   nbremployer: int.parse(employeController.text),
                   number: numero_controller.text,
                   accountuid: FirebaseAuth.instance.currentUser!.uid,
-                  offre: 'basic',
+                  offre: '',
                   nbreproduit: 0,
                   nbrereque: 0,
                   affiche: "",
+                  expire: "",
                   nbrevente: 0,
                   nbrevisite: 0)
               .toJson(),

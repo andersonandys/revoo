@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:revoo/controllers/creat_account_controller.dart';
+import 'package:Expoplace/controllers/creat_account_controller.dart';
 
 class stepComposant extends StatelessWidget {
   @override
