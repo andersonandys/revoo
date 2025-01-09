@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:Expoplace/main.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Expoplace/models/account_model.dart';
@@ -18,7 +18,8 @@ class AccounController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    if (FirebaseAuth.instance.currentUser != null) {
+
+    if (globalUid != null) {
       getdataAccount();
       getproduct();
       fetchCurrentMonthStats();
@@ -28,7 +29,7 @@ class AccounController extends GetxController {
 // function pour recuprer les data de la boutique
   getdataAccount() {
     DatafirestoreService.data_firestore_account
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .doc(globalUid)
         .snapshots()
         .listen((event) {
       if (event.data() != null) {
@@ -41,7 +42,7 @@ class AccounController extends GetxController {
 // function pour recuperer les produits
   getproduct() {
     DatafirestoreService.data_firestore_product
-        .where("accountuid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where("accountuid", isEqualTo: globalUid)
         .snapshots()
         .listen((event) {
       products.value =
@@ -58,8 +59,8 @@ class AccounController extends GetxController {
 
     try {
       DatafirestoreService.data_firestore_account
-          .doc(FirebaseAuth.instance.currentUser!
-              .uid) // Remplace 'userId' par l'ID de l'utilisateur connecté si nécessaire
+          .doc(
+              globalUid) // Remplace 'userId' par l'ID de l'utilisateur connecté si nécessaire
           .collection('stats')
           .doc(month)
           .snapshots()

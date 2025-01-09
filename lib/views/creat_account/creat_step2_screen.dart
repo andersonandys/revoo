@@ -79,6 +79,7 @@ class CreatStep2Screen extends StatelessWidget {
             InputComposant(
               hintText: 'Votre numéro whatsapp',
               nomText: '',
+              enable: false,
               minLines: 1,
               istexte: false,
               controller: controller.numero_controller,

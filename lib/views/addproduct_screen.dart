@@ -1,7 +1,8 @@
 import 'dart:io';
 
+import 'package:Expoplace/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -54,7 +55,7 @@ class _AddproductScreenState extends State<AddproductScreen> {
   RxInt uploadProgress = 0.obs;
   RxInt totalImages = 0.obs;
   var load = false.obs;
-  final accountuid = FirebaseAuth.instance.currentUser!.uid;
+
   final accountdata = Get.put(AccounController());
   String expireDate = "";
   @override
@@ -249,7 +250,7 @@ class _AddproductScreenState extends State<AddproductScreen> {
                   const SizedBox(height: 10),
                   StreamBuilder(
                     stream: DatafirestoreService.data_firestore_account
-                        .doc(accountuid)
+                        .doc(globalUid)
                         .collection('section')
                         .snapshots(),
                     builder: (BuildContext context,
@@ -657,7 +658,7 @@ class _AddproductScreenState extends State<AddproductScreen> {
     if (imageUrls.length == _selectedImages.length) {
       DatafirestoreService.data_firestore_product.doc(idproduit).set(
             ProductModel(
-              accountuid: accountuid,
+              accountuid: globalUid!,
               nom: nomproduc.text,
               description: description.text,
               stock: stock.text.isEmpty ? 0 : int.parse(stock.text),
@@ -673,11 +674,11 @@ class _AddproductScreenState extends State<AddproductScreen> {
             ).toJson(),
           );
       DatafirestoreService.data_firestore_account
-          .doc(accountuid)
+          .doc(globalUid)
           .update({"nbreproduit": FieldValue.increment(1)});
       DatafirestoreService.data_firestore_account
-          .doc(FirebaseAuth.instance.currentUser!
-              .uid) // Remplace 'userId' par l'ID de l'utilisateur connecté si nécessaire
+          .doc(
+              globalUid) // Remplace 'userId' par l'ID de l'utilisateur connecté si nécessaire
           .collection('stats')
           .doc(month)
           .update({"produit": FieldValue.increment(1)});
@@ -744,8 +745,6 @@ class addsection extends StatefulWidget {
 class _addsectionState extends State<addsection> {
   final nomsection = TextEditingController();
 
-  final accountuid = FirebaseAuth.instance.currentUser!.uid;
-
   final key = GlobalKey<FormState>();
 
   @override
@@ -792,7 +791,7 @@ class _addsectionState extends State<addsection> {
                 onPressed: () {
                   if (key.currentState!.validate()) {
                     DatafirestoreService.data_firestore_account
-                        .doc(accountuid)
+                        .doc(globalUid)
                         .collection("section")
                         .add({"nom": nomsection.text});
                     ShowMessageComposant.messagesucces(

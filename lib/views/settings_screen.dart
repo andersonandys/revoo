@@ -99,8 +99,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                account.accountdata.value!.lienstore,
-                                style: const TextStyle(fontSize: 18),
+                                "exploplace.com/${account.accountdata.value!.name}",
+                                style: const TextStyle(fontSize: 17),
                               )
                             ],
                           ),
@@ -139,7 +139,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           width: 120,
                           child: PrettyQrView.data(
                             data:
-                                "https://www.google.com/ ${account.accountdata.value!.name} ",
+                                "https://www.expoplace.com/${account.accountdata.value!.name} ",
                           ),
                         ),
                       ),
@@ -346,13 +346,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           indent: 30,
                           endIndent: 30,
                         ),
-                        ListTile(
-                          onTap: () => Get.bottomSheet(
-                              isScrollControlled: true,
-                              Wrap(
-                                children: [NumberUpdateScreen()],
-                              )),
-                          leading: const CircleAvatar(
+                        const ListTile(
+                          leading: CircleAvatar(
                             radius: 20,
                             backgroundColor: Color(0xff0D3B66),
                             child: Icon(
@@ -360,14 +355,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               color: Colors.white,
                             ),
                           ),
-                          title: const Text(
+                          title: Text(
                             "Numéro WhatsApp",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w400),
                           ),
-                          subtitle: const Text(
+                          subtitle: Text(
                               "Cette section vous permet de modifier le numéro WhatsApp de votre boutique."),
-                          trailing: const Icon(Icons.arrow_forward_ios),
+                          trailing: Icon(Icons.arrow_forward_ios),
                         ),
                         const Divider(
                           color: Color(0xffD9D9D9),
@@ -376,8 +371,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         ListTile(
                           onTap: () => Share.share(
-                              'check out my website https://example.com',
-                              subject: 'Look what I made!'),
+                              'Visiter mes produits sur exploplace.com/${account.accountdata.value!.name}',
+                              subject: 'Visiter ma boutique'),
                           leading: const CircleAvatar(
                             radius: 20,
                             backgroundColor: Color(0xff0D3B66),

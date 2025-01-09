@@ -1,5 +1,6 @@
+import 'package:Expoplace/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Expoplace/controllers/accoun_controller.dart';
@@ -37,9 +38,7 @@ class CreatAccountController extends GetxController {
   }
 
   addacount(context) {
-    DatafirestoreService.data_firestore_account
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set(
+    DatafirestoreService.data_firestore_account.doc(globalUid).set(
           AccountModel(
                   name: nomController.text,
                   description: descriptionController.text,
@@ -50,14 +49,15 @@ class CreatAccountController extends GetxController {
                   position: position_localisation.value,
                   nbremployer: int.parse(employeController.text),
                   number: numero_controller.text,
-                  accountuid: FirebaseAuth.instance.currentUser!.uid,
+                  accountuid: globalUid!,
                   offre: '',
                   nbreproduit: 0,
                   nbrereque: 0,
                   affiche: "",
                   expire: "",
                   nbrevente: 0,
-                  nbrevisite: 0)
+                  nbrevisite: 0,
+                  mdp: '')
               .toJson(),
         );
     saveMonthlyStatisticsWithMockData();
@@ -77,7 +77,7 @@ class CreatAccountController extends GetxController {
 
     FirebaseFirestore.instance
         .collection('account')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .doc(globalUid)
         .collection("stats")
         .doc(month)
         .set({

@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:Expoplace/controllers/creat_account_controller.dart';
+import 'package:Expoplace/main.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Expoplace/controllers/accoun_controller.dart';
@@ -18,10 +19,12 @@ class LoadpageScreen extends StatefulWidget {
 
 class _LoadpageScreenState extends State<LoadpageScreen> {
   final account = Get.put(AccounController());
+  final creatController = Get.put(CreatAccountController());
   @override
   void initState() {
     super.initState();
-
+    print(globalUid);
+    print("pour voir");
     account.getdataAccount();
     account.getproduct();
     account.fetchCurrentMonthStats();
@@ -31,12 +34,13 @@ class _LoadpageScreenState extends State<LoadpageScreen> {
   }
 
   gomenu() async {
-    final userDoc = DatafirestoreService.data_firestore_account
-        .doc(FirebaseAuth.instance.currentUser!.uid);
+    final userDoc = DatafirestoreService.data_firestore_account.doc(globalUid);
 
     // Récupère le document de l'utilisateur pour vérifier s'il existe
     final docSnapshot = await userDoc.get();
     if (docSnapshot.exists) {
+      creatController.numero_controller.text =
+          account.accountdata.value!.number;
       if (account.accountdata.value!.name != "") {
         Navigator.pushReplacement(
           context,

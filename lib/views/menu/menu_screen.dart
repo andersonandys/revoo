@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:Expoplace/service/preferences_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Expoplace/controllers/accoun_controller.dart';
@@ -52,8 +52,8 @@ class MenuScreen extends StatelessWidget {
                           ...MenuItems.all.map(buildMenuItem).toList(),
                           ListTile(
                             onTap: () {
-                              FirebaseAuth.instance.signOut();
-                              Get.offAll(LoginScreen());
+                              PreferencesHelper.clearUid();
+                              Get.offAll(const LoginScreen());
                             },
                             leading: const Icon(
                               Icons.logout_rounded,

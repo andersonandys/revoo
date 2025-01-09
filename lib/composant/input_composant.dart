@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
-class InputComposant extends StatelessWidget {
+class InputComposant extends StatefulWidget {
   final String hintText;
   final String nomText;
   final int minLines;
@@ -8,6 +9,7 @@ class InputComposant extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool? enable;
   final bool? istexte;
+  bool? obscureText;
   final Function()? onEditingCompletes;
   final Function(String)? onFieldSubmitted;
   final Function(String)? onChanged;
@@ -20,11 +22,17 @@ class InputComposant extends StatelessWidget {
       this.validator,
       this.enable,
       this.istexte,
+      this.obscureText,
       this.onEditingCompletes,
       this.onFieldSubmitted,
       this.onChanged})
       : super(key: key);
 
+  @override
+  State<InputComposant> createState() => _InputComposantState();
+}
+
+class _InputComposantState extends State<InputComposant> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,9 +41,9 @@ class InputComposant extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (nomText.isNotEmpty) ...[
+          if (widget.nomText.isNotEmpty) ...[
             Text(
-              nomText,
+              widget.nomText,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
             ),
             const SizedBox(height: 5),
@@ -47,26 +55,41 @@ class InputComposant extends StatelessWidget {
               // color: const Color(0xffF5F5F5),
             ),
             child: TextFormField(
-              enabled: (istexte != null && istexte!) ? true : enable,
-              keyboardType: (istexte != null && !istexte!)
-                  ? TextInputType.number
-                  : TextInputType.text,
-              controller: controller,
-              minLines: minLines,
-              maxLines: minLines,
-              validator: validator,
-              onEditingComplete: onEditingCompletes,
-              onFieldSubmitted: onFieldSubmitted,
-              onChanged: onChanged,
+              enabled: (widget.enable != null && widget.enable!)
+                  ? true
+                  : widget.enable,
+              keyboardType: (widget.istexte != null && widget.istexte!)
+                  ? TextInputType.text
+                  : TextInputType.number,
+              obscureText: (widget.obscureText != null && widget.obscureText!)
+                  ? true
+                  : false,
+              controller: widget.controller,
+              minLines: widget.minLines,
+              maxLines: widget.minLines,
+              validator: widget.validator,
+              onEditingComplete: widget.onEditingCompletes,
+              onFieldSubmitted: widget.onFieldSubmitted,
+              onChanged: widget.onChanged,
               decoration: InputDecoration(
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                hintText: hintText,
-                fillColor: const Color(0xffF5F5F5),
-                filled: true,
-              ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  hintText: widget.hintText,
+                  fillColor: const Color(0xffF5F5F5),
+                  filled: true,
+                  suffixIcon: (widget.obscureText != null)
+                      ? IconButton(
+                          onPressed: () {
+                            setState(() {
+                              widget.obscureText = !widget.obscureText!;
+                            });
+                          },
+                          icon: (widget.obscureText!)
+                              ? const Icon(Iconsax.eye)
+                              : const Icon(Iconsax.eye_slash))
+                      : null),
             ),
           ),
         ],

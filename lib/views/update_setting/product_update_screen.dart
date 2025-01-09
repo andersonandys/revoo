@@ -1,21 +1,19 @@
 import 'dart:io';
 
+import 'package:Expoplace/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/mdi.dart';
-import 'package:iconsax/iconsax.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:Expoplace/composant/input_composant.dart';
-import 'package:Expoplace/composant/menu_composant.dart';
+
 import 'package:Expoplace/composant/show_message_composant.dart';
 import 'package:Expoplace/controllers/accoun_controller.dart';
-import 'package:Expoplace/models/product_model.dart';
+
 import 'package:Expoplace/service/datafirestore_service.dart';
-import 'package:uuid/uuid.dart';
 
 class ProductUpdateScreen extends StatefulWidget {
   const ProductUpdateScreen({Key? key}) : super(key: key);
@@ -54,7 +52,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
   RxInt uploadProgress = 0.obs;
   RxInt totalImages = 0.obs;
   var load = false.obs;
-  final accountuid = FirebaseAuth.instance.currentUser!.uid;
+
   final product = Get.put(AccounController());
   List<String> _selectedImagesUrls = [];
   @override
@@ -253,7 +251,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
                   const SizedBox(height: 10),
                   StreamBuilder(
                     stream: DatafirestoreService.data_firestore_account
-                        .doc(accountuid)
+                        .doc(globalUid)
                         .collection('section')
                         .snapshots(),
                     builder: (BuildContext context,
@@ -770,8 +768,6 @@ class addsection extends StatefulWidget {
 class _addsectionState extends State<addsection> {
   final nomsection = TextEditingController();
 
-  final accountuid = FirebaseAuth.instance.currentUser!.uid;
-
   final key = GlobalKey<FormState>();
 
   @override
@@ -815,7 +811,7 @@ class _addsectionState extends State<addsection> {
                 onPressed: () {
                   if (key.currentState!.validate()) {
                     DatafirestoreService.data_firestore_account
-                        .doc(accountuid)
+                        .doc(globalUid)
                         .collection("section")
                         .add({"nom": nomsection.text});
                     ShowMessageComposant.messagesucces(

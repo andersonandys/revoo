@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20,
                   ),
                   const Text(
-                    "Pour utiliser votre boutique à son plein potentiel, nous allons vous donner quelques recommandations suivre.",
+                    "Pour utiliser votre boutique à son plein potentiel, nous allons vous donner quelques recommandations à suivre.",
                     style: TextStyle(fontSize: 17),
                     textAlign: TextAlign.justify,
                   ),

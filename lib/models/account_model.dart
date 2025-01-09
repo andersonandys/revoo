@@ -15,6 +15,7 @@ class AccountModel {
   final int nbrevisite;
   final String affiche;
   final String expire;
+  final String mdp;
   AccountModel({
     required this.name,
     required this.description,
@@ -32,6 +33,7 @@ class AccountModel {
     required this.nbrevente,
     required this.nbrevisite,
     required this.expire,
+    required this.mdp,
   });
 
   factory AccountModel.fromJson(Map<String, dynamic> json) => AccountModel(
@@ -51,6 +53,7 @@ class AccountModel {
         nbrevisite: json["nbrevisite"] ?? 0,
         offre: json["offre"] ?? "",
         expire: json["expire"] ?? "",
+        mdp: json["mdp"] ?? "",
       );
   Map<String, dynamic> toJson() => {
         "name": name,
@@ -69,5 +72,6 @@ class AccountModel {
         "nbrevente": nbrevente,
         "nbrevisite": nbrevisite,
         "expire": expire,
+        "mdp": mdp,
       };
 }

@@ -22,7 +22,7 @@ class ChartRequetteScreen extends StatelessWidget {
           // Affiche le graphique avec les données dynamiques
           return SfCartesianChart(
             primaryXAxis: CategoryAxis(),
-            legend: Legend(isVisible: true),
+            legend: const Legend(isVisible: true),
             tooltipBehavior: TooltipBehavior(enable: true),
             series: <CartesianSeries<_SalesData, String>>[
               LineSeries<_SalesData, String>(

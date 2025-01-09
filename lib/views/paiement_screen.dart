@@ -1,7 +1,8 @@
 import 'dart:math';
 
+import 'package:Expoplace/main.dart';
 import 'package:cinetpay/cinetpay.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Expoplace/service/datafirestore_service.dart';
@@ -187,8 +188,7 @@ class _PaiementScreenState extends State<PaiementScreen> {
                               switch (widget.montant) {
                                 case 2000:
                                   DatafirestoreService.data_firestore_account
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser!.uid)
+                                      .doc(globalUid)
                                       .update({
                                     "offre": "basic",
                                     "expire": formattedExpire,
@@ -196,8 +196,7 @@ class _PaiementScreenState extends State<PaiementScreen> {
                                   break;
                                 case 5000:
                                   DatafirestoreService.data_firestore_account
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser!.uid)
+                                      .doc(globalUid)
                                       .update({
                                     "offre": "premium",
                                     "expire": formattedExpire,
@@ -205,8 +204,7 @@ class _PaiementScreenState extends State<PaiementScreen> {
                                   break;
                                 case 10000:
                                   DatafirestoreService.data_firestore_account
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser!.uid)
+                                      .doc(globalUid)
                                       .update({
                                     "offre": "entreprise",
                                     "expire": formattedExpire,
