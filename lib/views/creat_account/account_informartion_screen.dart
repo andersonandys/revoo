@@ -59,9 +59,10 @@ class _AccountInformartionScreenState extends State<AccountInformartionScreen> {
                       final step1Form = creatController
                           .globalkey.value.currentState!
                           .validate();
-
-                      if (step1Form) {
+                      if (step1Form && creatController.existname.isFalse) {
                         creatController.step_account.value++;
+                      } else {
+                        creatController.existname.value = true;
                       }
                       break;
                     case 1:

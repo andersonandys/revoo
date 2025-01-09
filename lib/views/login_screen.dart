@@ -1,4 +1,5 @@
 import 'package:Expoplace/views/create_account/creat_acount.dart';
+import 'package:Expoplace/views/create_account/logins.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -37,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 300,
               color: const Color(0xffFFCF0D),
               child: Container(
-                  margin: const EdgeInsets.only(top: 30, left: 10, right: 10),
+                  margin: const EdgeInsets.only(top: 35, left: 10, right: 10),
                   child: Column(
                     children: [
                       const Expanded(
@@ -72,9 +73,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               fixedSize:
-                                  Size(MediaQuery.of(context).size.width, 60),
+                                  Size(MediaQuery.of(context).size.width, 50),
                               backgroundColor: const Color(0xff0D3B66)),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.bottomSheet(
+                                isScrollControlled: true,
+                                const SingleChildScrollView(
+                                  child: Wrap(
+                                    children: [Logins()],
+                                  ),
+                                ));
+                          },
                           child: const Text(
                             "Connectez-vous",
                             style: TextStyle(fontSize: 20, color: Colors.white),
@@ -90,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             side:
                                 const BorderSide(color: Colors.black, width: 1),
                             fixedSize:
-                                Size(MediaQuery.of(context).size.width, 60),
+                                Size(MediaQuery.of(context).size.width, 50),
                           ),
                           onPressed: () {
                             Get.bottomSheet(

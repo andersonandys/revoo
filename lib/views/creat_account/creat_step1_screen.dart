@@ -13,74 +13,73 @@ class CreatStep1Screen extends StatefulWidget {
 }
 
 class _CreatStep1ScreenState extends State<CreatStep1Screen> {
-  bool nameIsExist = false;
-
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: widget.controller.globalkey.value,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 20),
-          InputComposant(
-            hintText: 'Nom de votre boutique',
-            nomText: 'Nom boutique',
-            minLines: 1,
-            controller: widget.controller.nomController,
-            onFieldSubmitted: (value) =>
-                checkNameExist(value), // Appelé après la soumission
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                checkNameExist(value); // Vérification en temps réel
-              }
-            },
-            onEditingCompletes: () =>
-                checkNameExist(widget.controller.nomController.text),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Veuillez entrer le nom de votre boutique';
-              }
-              return null;
-            },
-          ),
-          if (nameIsExist)
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                "Ce nom est déjà utilisé",
-                style: TextStyle(color: Colors.red),
+    return Obx(() => Form(
+          key: widget.controller.globalkey.value,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              InputComposant(
+                hintText: 'Nom de votre boutique',
+                nomText: 'Nom boutique',
+                minLines: 1,
+                controller: widget.controller.nomController,
+                onFieldSubmitted: (value) =>
+                    checkNameExist(value), // Appelé après la soumission
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    checkNameExist(value); // Vérification en temps réel
+                  }
+                },
+                onEditingCompletes: () =>
+                    checkNameExist(widget.controller.nomController.text),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez entrer le nom de votre boutique';
+                  }
+                  return null;
+                },
               ),
-            ),
-          InputComposant(
-            hintText: "Nombre d'employés",
-            nomText: 'Nombre de vos employés',
-            minLines: 1,
-            istexte: false,
-            controller: widget.controller.employeController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Veuillez entrer le nombre d\'employés';
-              }
-              return null;
-            },
+              (widget.controller.existname.isTrue)
+                  ? const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "Ce nom est déjà utilisé",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    )
+                  : Container(),
+              InputComposant(
+                hintText: "Nombre d'employés",
+                nomText: 'Nombre de vos employés',
+                minLines: 1,
+                istexte: false,
+                controller: widget.controller.employeController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez entrer le nombre d\'employés';
+                  }
+                  return null;
+                },
+              ),
+              InputComposant(
+                hintText: 'Description',
+                nomText: 'Description de votre boutique',
+                minLines: 3,
+                controller: widget.controller.descriptionController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez entrer une description';
+                  }
+                  return null;
+                },
+              ),
+            ],
           ),
-          InputComposant(
-            hintText: 'Description',
-            nomText: 'Description de votre boutique',
-            minLines: 3,
-            controller: widget.controller.descriptionController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Veuillez entrer une description';
-              }
-              return null;
-            },
-          ),
-        ],
-      ),
-    );
+        ));
   }
 
   Future<void> checkNameExist(String namedata) async {
@@ -90,19 +89,12 @@ class _CreatStep1ScreenState extends State<CreatStep1Screen> {
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
-        setState(() {
-          nameIsExist = true;
-        });
-        widget.controller.nomController.clear();
+        widget.controller.existname.value = true;
       } else {
-        setState(() {
-          nameIsExist = false;
-        });
+        widget.controller.existname.value = false;
       }
     } catch (e) {
-      setState(() {
-        nameIsExist = false;
-      });
+      widget.controller.existname.value = true;
     }
   }
 }

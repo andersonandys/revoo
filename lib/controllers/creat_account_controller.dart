@@ -20,6 +20,7 @@ class CreatAccountController extends GetxController {
   TextEditingController numero_controller = TextEditingController();
   TextEditingController localisation_controller = TextEditingController();
   TextEditingController lienstotre_controller = TextEditingController();
+  var existname = false.obs;
   var avatar = "".obs;
   // declaration dun key global pour l utiliser ailleurs
   var globalkey = GlobalKey<FormState>().obs;
@@ -38,30 +39,18 @@ class CreatAccountController extends GetxController {
   }
 
   addacount(context) {
-    DatafirestoreService.data_firestore_account.doc(globalUid).set(
-          AccountModel(
-                  name: nomController.text,
-                  description: descriptionController.text,
-                  avatar: avatar.value,
-                  localisation: localisation_controller.text,
-                  lienstore:
-                      nomController.text.replaceAll(" ", "_").toLowerCase(),
-                  position: position_localisation.value,
-                  nbremployer: int.parse(employeController.text),
-                  number: numero_controller.text,
-                  accountuid: globalUid!,
-                  offre: '',
-                  nbreproduit: 0,
-                  nbrereque: 0,
-                  affiche: "",
-                  expire: "",
-                  nbrevente: 0,
-                  nbrevisite: 0,
-                  mdp: '')
-              .toJson(),
-        );
+    DatafirestoreService.data_firestore_account.doc(globalUid).update({
+      "name": nomController.text,
+      "description": descriptionController.text,
+      "avatar": avatar.value,
+      "localisation": localisation_controller.text,
+      "lienstore": nomController.text.replaceAll(" ", "_").toLowerCase(),
+      "position": position_localisation.value,
+      "nbremployer": int.parse(employeController.text),
+      "number": numero_controller.text,
+      "accountuid": globalUid!,
+    });
     saveMonthlyStatisticsWithMockData();
-
     Navigator.push(
       context,
       MaterialPageRoute<void>(

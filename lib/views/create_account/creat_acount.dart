@@ -1,10 +1,12 @@
 import 'package:Expoplace/composant/input_composant.dart';
+import 'package:Expoplace/controllers/creat_account_controller.dart';
 import 'package:Expoplace/main.dart';
 import 'package:Expoplace/models/account_model.dart';
 import 'package:Expoplace/service/datafirestore_service.dart';
 import 'package:Expoplace/service/preferences_helper.dart';
 import 'package:Expoplace/views/creat_account/account_informartion_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
 class CreatAcount extends StatefulWidget {
@@ -20,6 +22,7 @@ class _CreatAcountState extends State<CreatAcount> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController ConfirmpasswordController =
       TextEditingController();
+  final creatController = Get.put(CreatAccountController());
   bool nameIsExist = false;
   @override
   Widget build(BuildContext context) {
@@ -168,7 +171,7 @@ class _CreatAcountState extends State<CreatAcount> {
   createCompte(uid) async {
     await PreferencesHelper.setUid(uid);
     globalUid = uid;
-
+    creatController.numero_controller.text = numeroController.text;
     DatafirestoreService.data_firestore_account.doc(uid).set(
           AccountModel(
                   name: "",
@@ -196,6 +199,7 @@ class _CreatAcountState extends State<CreatAcount> {
         builder: (BuildContext context) => const AccountInformartionScreen(),
       ),
     );
+
     numeroController.clear();
     passwordController.clear();
     ConfirmpasswordController.clear();
