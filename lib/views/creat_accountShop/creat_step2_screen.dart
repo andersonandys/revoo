@@ -36,34 +36,36 @@ class CreatStep2Screen extends StatelessWidget {
               height: 20,
             ),
             Obx(
-              () => Center(
-                child: Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundColor: Colors.black,
-                      backgroundImage: (creatController.avatar.isNotEmpty)
-                          ? NetworkImage(creatController.avatar.value)
-                          : null,
-                    ),
-                    Positioned(
-                      bottom: 1,
-                      right: 1,
-                      child: (load.isTrue)
-                          ? const CircularProgressIndicator(
-                              color: Color(0xff0D3B66),
-                            )
-                          : GestureDetector(
-                              onTap: () => selectlogo(context),
-                              child: const CircleAvatar(
-                                backgroundColor: Color(0xffF5F5F5),
-                                child:
-                                    Icon(Iconsax.camera, color: Colors.black),
-                              ),
+              () => Stack(
+                children: [
+                  Container(
+                    height: 130,
+                    width: 130,
+                    decoration: BoxDecoration(
+                        image: (creatController.avatar.isNotEmpty)
+                            ? DecorationImage(
+                                image: NetworkImage(
+                                  creatController.avatar.value,
+                                ),
+                                fit: BoxFit.cover)
+                            : null,
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.black),
+                  ),
+                  Positioned(
+                    bottom: 5,
+                    right: 5,
+                    child: (load.isTrue)
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : GestureDetector(
+                            onTap: () => selectlogo(context),
+                            child: const CircleAvatar(
+                              backgroundColor: Color(0xffF5F5F5),
+                              child: Icon(Iconsax.camera, color: Colors.black),
                             ),
-                    )
-                  ],
-                ),
+                          ),
+                  )
+                ],
               ),
             ),
             const SizedBox(

@@ -99,7 +99,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                "exploplace.com/${account.accountdata.value!.name}",
+                                "expoplace.shop/${account.accountdata.value!.lienstore}",
                                 style: const TextStyle(fontSize: 17),
                               )
                             ],
@@ -118,7 +118,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       onTap: () async {
                         final qrCode = QrCode.fromData(
                           data:
-                              'https://www.google.com/ ${account.accountdata.value!.name} ',
+                              'https://www.expoplace.shop/${account.accountdata.value!.lienstore} ',
                           errorCorrectLevel: QrErrorCorrectLevel.H,
                         );
 
@@ -139,7 +139,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           width: 120,
                           child: PrettyQrView.data(
                             data:
-                                "https://www.expoplace.com/${account.accountdata.value!.name} ",
+                                "https://www.expoplace.shop/${account.accountdata.value!.lienstore} ",
                           ),
                         ),
                       ),

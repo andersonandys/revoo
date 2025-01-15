@@ -1,22 +1,26 @@
 import 'package:Expoplace/composant/input_composant.dart';
+import 'package:Expoplace/controllers/creat_account_controller.dart';
+import 'package:Expoplace/main.dart';
+import 'package:Expoplace/service/preferences_helper.dart';
 import 'package:Expoplace/views/loadpage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Expoplace/service/datafirestore_service.dart';
+import 'package:get/get.dart';
 
-class Logins extends StatefulWidget {
-  const Logins({Key? key}) : super(key: key);
+class Forgermdp extends StatefulWidget {
+  const Forgermdp({Key? key}) : super(key: key);
 
   @override
   _LoginsState createState() => _LoginsState();
 }
 
-class _LoginsState extends State<Logins> {
+class _LoginsState extends State<Forgermdp> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController numeroController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool load = false;
   String errorMessage = "";
-
+  final creatController = Get.put(CreatAccountController());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,7 +42,7 @@ class _LoginsState extends State<Logins> {
                 height: 20,
               ),
               const Text(
-                'Nous vous prions de remplir les informations pour vous connecter',
+                'Nous vous prions de remplir les informations pour vous connecter.',
                 style: TextStyle(fontSize: 17),
                 textAlign: TextAlign.justify,
               ),
@@ -101,6 +105,8 @@ class _LoginsState extends State<Logins> {
                         setState(() {
                           errorMessage = "";
                         });
+                        creatController.numero_controller.text =
+                            numeroController.text;
                         Navigator.push(
                             context,
                             MaterialPageRoute<void>(
@@ -136,6 +142,11 @@ class _LoginsState extends State<Logins> {
           .where("mdp", isEqualTo: password)
           .get();
       if (querySnapshot.docs.isNotEmpty) {
+        await PreferencesHelper.setUid(querySnapshot.docs.first["accountuid"]);
+        globalUid = querySnapshot.docs.first["accountuid"];
+        setState(() {
+          globalUid = querySnapshot.docs.first["accountuid"];
+        });
         return true; // Les informations sont correctes
       }
     } catch (e) {

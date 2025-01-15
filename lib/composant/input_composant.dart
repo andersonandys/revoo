@@ -36,7 +36,7 @@ class _InputComposantState extends State<InputComposant> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(bottom: 10, top: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +58,7 @@ class _InputComposantState extends State<InputComposant> {
               enabled: (widget.enable != null && widget.enable!)
                   ? true
                   : widget.enable,
-              keyboardType: (widget.istexte != null && widget.istexte!)
+              keyboardType: (widget.istexte == null || widget.istexte == true)
                   ? TextInputType.text
                   : TextInputType.number,
               obscureText: (widget.obscureText != null && widget.obscureText!)

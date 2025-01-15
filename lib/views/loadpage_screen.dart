@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:Expoplace/controllers/creat_account_controller.dart';
 import 'package:Expoplace/main.dart';
+import 'package:Expoplace/views/creat_accountShop/account_informartion_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Expoplace/controllers/accoun_controller.dart';
 import 'package:Expoplace/service/datafirestore_service.dart';
-import 'package:Expoplace/views/creat_account/account_informartion_screen.dart';
 import 'package:Expoplace/views/menu/home_menu.dart';
 
 class LoadpageScreen extends StatefulWidget {
@@ -21,10 +21,8 @@ class _LoadpageScreenState extends State<LoadpageScreen> {
   final account = Get.put(AccounController());
   final creatController = Get.put(CreatAccountController());
   @override
-  void initState() {
+  initState() {
     super.initState();
-    print(globalUid);
-    print("pour voir");
     account.getdataAccount();
     account.getproduct();
     account.fetchCurrentMonthStats();
@@ -39,8 +37,6 @@ class _LoadpageScreenState extends State<LoadpageScreen> {
     // Récupère le document de l'utilisateur pour vérifier s'il existe
     final docSnapshot = await userDoc.get();
     if (docSnapshot.exists) {
-      creatController.numero_controller.text =
-          account.accountdata.value!.number;
       if (account.accountdata.value!.name != "") {
         Navigator.pushReplacement(
           context,
@@ -49,6 +45,8 @@ class _LoadpageScreenState extends State<LoadpageScreen> {
           ),
         );
       } else {
+        creatController.numero_controller.text =
+            account.accountdata.value!.number;
         Navigator.pushReplacement(
           context,
           MaterialPageRoute<void>(
@@ -58,6 +56,8 @@ class _LoadpageScreenState extends State<LoadpageScreen> {
         );
       }
     } else {
+      creatController.numero_controller.text =
+          account.accountdata.value!.number;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute<void>(

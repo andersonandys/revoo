@@ -416,7 +416,9 @@ class _AddproductScreenState extends State<AddproductScreen> {
                         ElevatedButton(
                             onPressed: () => sendPublication(),
                             child: (load.value)
-                                ? const CircularProgressIndicator()
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
                                 : const Text("Publier le produit"))
                     ]
                   ],

@@ -35,21 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         centerTitle: true,
         leading: const MenuWidget(),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(5),
-            child: GestureDetector(
-              child: const CircleAvatar(
-                backgroundColor: Color(0xffFFCF0D),
-                child: Icon(
-                  Icons.notifications_outlined,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),
-            ),
-          )
-        ],
+        actions: [],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),

@@ -3,11 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:Expoplace/controllers/accoun_controller.dart';
-import 'package:Expoplace/models/account_model.dart';
 import 'package:Expoplace/service/datafirestore_service.dart';
 import 'package:Expoplace/views/loadpage_screen.dart';
-import 'package:Expoplace/views/menu/home_menu.dart';
 
 class CreatAccountController extends GetxController {
   var step_account = 0.obs;
@@ -15,7 +12,7 @@ class CreatAccountController extends GetxController {
   // Controllers pour les champs de la première étape
   TextEditingController nomController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController employeController = TextEditingController();
+  var isphisycshopController = "".obs;
   // Controller pour les champs de la seconde etapes
   TextEditingController numero_controller = TextEditingController();
   TextEditingController localisation_controller = TextEditingController();
@@ -26,12 +23,11 @@ class CreatAccountController extends GetxController {
   var globalkey = GlobalKey<FormState>().obs;
   // recuperation de la localisation du compte
   var position_localisation = "".obs;
-
   @override
   void onClose() {
     nomController.dispose();
     descriptionController.dispose();
-    employeController.dispose();
+    isphisycshopController.value = "";
     numero_controller.dispose();
     localisation_controller.dispose();
     lienstotre_controller.dispose();
@@ -46,7 +42,7 @@ class CreatAccountController extends GetxController {
       "localisation": localisation_controller.text,
       "lienstore": nomController.text.replaceAll(" ", "_").toLowerCase(),
       "position": position_localisation.value,
-      "nbremployer": int.parse(employeController.text),
+      "typeEmplacementShop": isphisycshopController.value,
       "number": numero_controller.text,
       "accountuid": globalUid!,
     });

@@ -60,7 +60,7 @@ class _HomeMenuState extends State<HomeMenu> {
 }
 
 class MenuItems {
-  static const home = MenuItemlist('Dashboard', Icons.payment);
+  static const home = MenuItemlist('Dashboard', Iconsax.home);
   static const addproduit = MenuItemlist('Ajouter un article', Iconsax.box_add);
   static const article = MenuItemlist('Mes articles', Iconsax.box);
   static const settings = MenuItemlist('Paramètre', Icons.settings);

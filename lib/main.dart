@@ -51,28 +51,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-  // Map<String, dynamic>? checkIfCodeExists(String code) {
-  //   // Find the room that matches the code
-  //   final room = rooms.firstWhere(
-  //     (room) => room.code == code,
-  //   );
-
-  //   // If the room exists, return its UID and a flag indicating success
-  //   if (room != null) {
-  //     return {
-  //       'exists': true,
-  //       'uid': room.uidroom,
-  //       "nombrep": room.nombrep,
-  //       "players": room.players
-  //       // Assuming room has a 'uid' field
-  //     };
-  //   } else {
-  //     // If no room with the given code is found, return exists as false
-  //     return {
-  //       'exists': false,
-  //       'uid': null,
-  //     };
-  //   }
-  // }

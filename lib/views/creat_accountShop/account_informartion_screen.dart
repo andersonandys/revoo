@@ -1,11 +1,11 @@
+import 'package:Expoplace/composant/show_message_composant.dart';
+import 'package:Expoplace/controllers/creat_account_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Expoplace/composant/step_account_composant.screen.dart';
-import 'package:Expoplace/controllers/accoun_controller.dart';
-import 'package:Expoplace/controllers/creat_account_controller.dart';
-import 'package:Expoplace/views/creat_account/creat_step1_screen.dart';
-import 'package:Expoplace/views/creat_account/creat_step2_screen.dart';
-import 'package:Expoplace/views/creat_account/creat_step3_screen.dart';
+import 'package:Expoplace/views/creat_accountShop/creat_step1_screen.dart';
+import 'package:Expoplace/views/creat_accountShop/creat_step2_screen.dart';
+import 'package:Expoplace/views/creat_accountShop/creat_step3_screen.dart';
 
 class AccountInformartionScreen extends StatefulWidget {
   const AccountInformartionScreen({Key? key}) : super(key: key);
@@ -60,7 +60,13 @@ class _AccountInformartionScreenState extends State<AccountInformartionScreen> {
                           .globalkey.value.currentState!
                           .validate();
                       if (step1Form && creatController.existname.isFalse) {
-                        creatController.step_account.value++;
+                        if (creatController.isphisycshopController.value ==
+                            "") {
+                          ShowMessageComposant.message(context,
+                              "Vous nous prions de sélection l'emplacement de votre boutique.");
+                        } else {
+                          creatController.step_account.value++;
+                        }
                       } else {
                         creatController.existname.value = true;
                       }
@@ -71,7 +77,12 @@ class _AccountInformartionScreenState extends State<AccountInformartionScreen> {
                           .validate();
 
                       if (step2Form) {
-                        creatController.step_account.value++;
+                        if (creatController.avatar.value.isNotEmpty) {
+                          creatController.step_account.value++;
+                        } else {
+                          ShowMessageComposant.message(
+                              context, "Vous devez ajouter votre logo.");
+                        }
                       }
                       break;
                     case 2:

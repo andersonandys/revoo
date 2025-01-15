@@ -1,7 +1,7 @@
 class AccountModel {
   final String name;
   final String description;
-  final int nbremployer;
+  final String typeEmplacementShop;
   final String number;
   final String avatar;
   final String localisation;
@@ -16,10 +16,12 @@ class AccountModel {
   final String affiche;
   final String expire;
   final String mdp;
+  final String colorfavoris;
+
   AccountModel({
     required this.name,
     required this.description,
-    required this.nbremployer,
+    required this.typeEmplacementShop,
     required this.number,
     required this.localisation,
     required this.lienstore,
@@ -34,12 +36,13 @@ class AccountModel {
     required this.nbrevisite,
     required this.expire,
     required this.mdp,
+    required this.colorfavoris,
   });
 
   factory AccountModel.fromJson(Map<String, dynamic> json) => AccountModel(
         name: json["name"] ?? "",
         description: json["description"] ?? "",
-        nbremployer: json["nbremployer"] ?? 0,
+        typeEmplacementShop: json["typeEmplacementShop"] ?? "",
         number: json["number"] ?? "",
         avatar: json["avatar"] ?? "",
         localisation: json["localisation"] ?? "",
@@ -53,12 +56,13 @@ class AccountModel {
         nbrevisite: json["nbrevisite"] ?? 0,
         offre: json["offre"] ?? "",
         expire: json["expire"] ?? "",
+        colorfavoris: json["colorfavoris"] ?? "",
         mdp: json["mdp"] ?? "",
       );
   Map<String, dynamic> toJson() => {
         "name": name,
         "description": description,
-        "nbremployer": nbremployer,
+        "typeEmplacementShop": typeEmplacementShop,
         "number": number,
         "avatar": avatar,
         "affiche": affiche,
@@ -73,5 +77,6 @@ class AccountModel {
         "nbrevisite": nbrevisite,
         "expire": expire,
         "mdp": mdp,
+        "colorfavoris": colorfavoris,
       };
 }
