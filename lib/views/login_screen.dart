@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: const Row(
                                 children: <Widget>[
                                   Text(
-                                    "Mot de passe oublie",
+                                    "Mot de passe oublié",
                                     style: TextStyle(
                                         color: Colors.red, fontSize: 16),
                                   ),
@@ -214,7 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   );
                                 },
                                 child: const Text(
-                                  "Creer un compte.",
+                                  "Créer un compte.",
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w100,

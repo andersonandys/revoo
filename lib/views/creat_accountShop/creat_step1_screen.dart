@@ -74,7 +74,7 @@ class _CreatStep1ScreenState extends State<CreatStep1Screen> {
                 height: 10,
               ),
               const Text(
-                  "Dite-nous si votre boutique est purement en ligne ou physique. Cela nous permettre de vous offrir une meilleur prise en charge et vous proposer des fonctionnalite adequate"),
+                  "Dites-nous si votre boutique est purement en ligne ou en physique. Cela nous permettre de vous offrir une meilleure prise en charge et vous proposer des fonctionnalités adéquates"),
               const SizedBox(
                 height: 20,
               ),
@@ -119,7 +119,7 @@ class _CreatStep1ScreenState extends State<CreatStep1Screen> {
                           "physique";
                     },
                     label: Text(
-                      'Boutique physicque',
+                      'Boutique physique',
                       style: TextStyle(
                         color:
                             (widget.controller.isphisycshopController.value ==

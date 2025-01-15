@@ -26,6 +26,8 @@ class _CreateAccountState extends State<CreateAccount> {
   final createController = Get.put(CreatAccountController());
   bool nameExists = false;
   bool load = false;
+  var uid = const Uuid();
+  String secureColor = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,24 +133,50 @@ class _CreateAccountState extends State<CreateAccount> {
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  'Question de securité',
+                  'Question de sécurité',
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                 ),
                 const Text(
-                    'Cette question va etre utilite pour la renitialisation de votre mot de passe'),
+                    'Cette question va être utilisée pour la revitalisation de votre mot de passe.'),
                 InputComposant(
+                  onChanged: (value) {
+                    secureColor =
+                        colorfavorisController.text + uid.v4().substring(0, 4);
+                    setState(() {});
+                  },
                   enable: true,
                   controller: colorfavorisController,
-                  hintText: "Vitre couleur favoris",
-                  nomText: 'Couleur favoris',
+                  hintText: "Votre couleur favorite",
+                  nomText: 'Couleur favorite',
                   minLines: 1,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez saisir une couleur';
+                      return 'Veuillez saisir une couleur.';
                     }
                     return null;
                   },
                 ),
+                if (colorfavorisController.text.isNotEmpty)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const Text(
+                        'votre couleur devient : ',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        secureColor,
+                        style: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -238,7 +266,7 @@ class _CreateAccountState extends State<CreateAccount> {
             expire: "",
             mdp: passwordController.text,
             nbrevisite: 0,
-            colorfavoris: colorfavorisController.text,
+            colorfavoris: secureColor,
           ).toJson(),
         );
     Navigator.pushReplacement(
